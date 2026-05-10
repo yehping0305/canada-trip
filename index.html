@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🧊 帶寶寶去凍屁股</title>
+<style>
+:root {
+  --maple: #E8734A;
+  --maple-light: #F5A78B;
+  --gold: #C9A96E;
+  --cream: #FFF8F2;
+  --brown: #4A2010;
+  --brown-light: #A0522D;
+  --forest: #5B8A5A;
+  --sky: #4A7FA5;
+  --sky-light: #EBF4FA;
+  --white: #FFFFFF;
+  --gray: #FAF3EE;
+  --gray2: #EAD9CE;
+  --shadow: 0 2px 12px rgba(232,115,74,0.12);
+  --radius: 16px;
+  --nav-h: 68px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',sans-serif; background:var(--cream); color:var(--brown); min-height:100vh; }
+
+/* HEADER */
+.app-header {
+  background: linear-gradient(135deg, #E8734A 0%, #F5A78B 45%, #C9A96E 100%);
+  color:#fff; padding:20px 16px 16px; text-align:center;
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 16px rgba(232,115,74,0.35);
+}
+.app-header h1 { font-size:20px; font-weight:800; letter-spacing:1px; }
+.app-header .sub { font-size:12px; opacity:.85; margin-top:4px; }
+.maple-row { font-size:22px; margin-bottom:4px; }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; height:var(--nav-h);
+  background:#fff; display:flex; border-top:1px solid var(--gray2);
+  z-index:200; box-shadow:0 -2px 12px rgba(0,0,0,0.08);
+}
+.nav-btn {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; border:none; background:none; cursor:pointer;
+  font-size:10px; color:#999; gap:3px; transition:color .2s;
+  padding:0 2px;
+}
+.nav-btn .ico { font-size:20px; }
+.nav-btn.active { color:var(--maple); }
+.nav-btn.active .ico { transform:scale(1.1); }
+
+/* MAIN CONTENT */
+.tab-panel { display:none; padding:12px 12px calc(var(--nav-h) + 12px); min-height:calc(100vh - 100px); }
+.tab-panel.active { display:block; }
+
+/* CARDS */
+.card {
+  background:#fff; border-radius:var(--radius); padding:16px;
+  margin-bottom:12px; box-shadow:var(--shadow);
+}
+.card-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.card-ico { font-size:28px; }
+.card-title { font-size:16px; font-weight:700; }
+.card-sub { font-size:12px; color:#888; margin-top:2px; }
+.tag {
+  display:inline-block; padding:3px 10px; border-radius:20px;
+  font-size:11px; font-weight:600; margin:2px;
+}
+.tag-free { background:#E8F5E9; color:#2E7D32; }
+.tag-cost { background:#FFF3E0; color:#E65100; }
+.tag-food { background:#FCE4EC; color:#C62828; }
+.tag-hotel { background:var(--sky-light); color:var(--sky); }
+.tag-tip { background:#F3E5F5; color:#6A1B9A; }
+
+/* DAY CARDS */
+.day-header {
+  background: linear-gradient(135deg, var(--maple) 0%, var(--maple-light) 100%);
+  color:#fff; border-radius:var(--radius); padding:14px 16px;
+  margin-bottom:8px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+}
+.day-header h2 { font-size:15px; font-weight:700; }
+.day-header .date-badge { background:rgba(255,255,255,0.25); border-radius:8px; padding:3px 10px; font-size:12px; }
+.day-body { display:none; }
+.day-body.open { display:block; }
+
+/* SPOTS */
+.spot-card {
+  border-left:4px solid var(--maple); background:#fff;
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:12px; margin-bottom:8px; box-shadow:var(--shadow);
+}
+.spot-name { font-size:14px; font-weight:700; margin-bottom:4px; }
+.spot-desc { font-size:12px; color:#555; line-height:1.6; margin-bottom:8px; }
+.spot-tip { font-size:11px; color:var(--brown-light); background:var(--cream); padding:6px 10px; border-radius:8px; margin-bottom:6px; }
+.spot-actions { display:flex; gap:6px; flex-wrap:wrap; }
+.btn-map {
+  display:inline-flex; align-items:center; gap:4px; padding:6px 12px;
+  background:var(--sky); color:#fff; border-radius:20px; font-size:11px;
+  text-decoration:none; font-weight:600; border:none; cursor:pointer;
+}
+.btn-map:hover { background:#1449a0; }
+.btn-small {
+  display:inline-flex; align-items:center; gap:4px; padding:6px 12px;
+  background:var(--cream); color:var(--brown); border-radius:20px; font-size:11px;
+  border:1px solid var(--gray2); cursor:pointer; font-weight:600;
+}
+
+/* EXPENSE TRACKER */
+.expense-summary {
+  background: linear-gradient(135deg, #5B8A5A 0%, #7AAF78 100%);
+  color:#fff; border-radius:var(--radius); padding:16px; margin-bottom:12px;
+}
+.expense-summary h2 { font-size:18px; font-weight:800; }
+.expense-summary .total { font-size:28px; font-weight:900; margin:4px 0; }
+.expense-summary .per-person { font-size:13px; opacity:.85; }
+.person-cards { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+.person-card { background:#fff; border-radius:12px; padding:12px; box-shadow:var(--shadow); text-align:center; }
+.person-card .name { font-size:13px; font-weight:700; }
+.person-card .amount { font-size:18px; font-weight:800; color:var(--maple); }
+.person-card .paid { font-size:11px; color:#888; }
+.expense-list { }
+.expense-item {
+  background:#fff; border-radius:12px; padding:12px; margin-bottom:8px;
+  box-shadow:var(--shadow); display:flex; justify-content:space-between; align-items:center;
+}
+.expense-item-left .e-name { font-size:13px; font-weight:600; }
+.expense-item-left .e-meta { font-size:11px; color:#888; }
+.expense-item-right .e-amount { font-size:16px; font-weight:700; color:var(--maple); }
+.expense-item-right .e-split { font-size:10px; color:#aaa; text-align:right; }
+.fab {
+  position:fixed; bottom:calc(var(--nav-h) + 16px); right:16px;
+  width:56px; height:56px; border-radius:50%;
+  background: linear-gradient(135deg, #E8734A, #C9A96E);
+  color:#fff; font-size:28px; border:none; cursor:pointer;
+  box-shadow:0 4px 16px rgba(232,115,74,0.4);
+  display:flex; align-items:center; justify-content:center; z-index:150;
+}
+
+/* MODAL */
+.modal-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5);
+  z-index:300; align-items:flex-end; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:#fff; border-radius:24px 24px 0 0;
+  padding:24px 20px 40px; width:100%; max-width:480px;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal h3 { font-size:18px; font-weight:700; margin-bottom:16px; }
+.form-group { margin-bottom:14px; }
+.form-group label { font-size:12px; color:#888; margin-bottom:4px; display:block; font-weight:600; }
+.form-group input, .form-group select, .form-group textarea {
+  width:100%; padding:10px 14px; border:1.5px solid var(--gray2);
+  border-radius:10px; font-size:14px; font-family:inherit; outline:none;
+  transition:border-color .2s;
+}
+.form-group input:focus, .form-group select:focus { border-color:var(--maple); }
+.checkbox-group { display:flex; flex-wrap:wrap; gap:6px; }
+.checkbox-label {
+  display:flex; align-items:center; gap:4px; padding:6px 12px;
+  border:1.5px solid var(--gray2); border-radius:20px; cursor:pointer; font-size:12px;
+  transition:all .2s;
+}
+.checkbox-label input { display:none; }
+.checkbox-label.checked { background:var(--maple); color:#fff; border-color:var(--maple); }
+.btn-submit {
+  width:100%; padding:14px; background:linear-gradient(135deg,#E8734A,#C9A96E);
+  color:#fff; border:none; border-radius:12px; font-size:16px;
+  font-weight:700; cursor:pointer; margin-top:8px;
+}
+.btn-cancel { width:100%; padding:12px; background:var(--gray); color:#888; border:none; border-radius:12px; font-size:14px; cursor:pointer; margin-top:6px; }
+
+/* CURRENCY */
+.currency-box { background:#fff; border-radius:var(--radius); padding:20px; box-shadow:var(--shadow); }
+.currency-input-wrap { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.currency-input-wrap input {
+  flex:1; padding:12px 16px; border:2px solid var(--gray2);
+  border-radius:12px; font-size:20px; font-weight:700; outline:none;
+}
+.currency-input-wrap input:focus { border-color:var(--maple); }
+.currency-label { font-size:14px; font-weight:700; color:#888; min-width:50px; }
+.flip-btn { padding:10px; background:var(--cream); border:1.5px solid var(--gray2); border-radius:50%; cursor:pointer; font-size:18px; }
+.result-box { background:var(--cream); border-radius:12px; padding:16px; text-align:center; }
+.result-amount { font-size:32px; font-weight:900; color:var(--maple); }
+.result-label { font-size:13px; color:#888; }
+.rate-row { display:flex; justify-content:space-between; align-items:center; margin-top:12px; font-size:12px; color:#aaa; }
+.rate-input { border:1px solid var(--gray2); border-radius:6px; padding:4px 8px; font-size:12px; width:80px; text-align:center; }
+
+/* PACKING */
+.pack-category { margin-bottom:16px; }
+.pack-category h3 { font-size:14px; font-weight:700; color:var(--maple); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.pack-item {
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  background:#fff; border-radius:10px; margin-bottom:6px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06); cursor:pointer;
+}
+.pack-item input[type=checkbox] { width:18px; height:18px; accent-color:var(--maple); cursor:pointer; }
+.pack-item.done span { text-decoration:line-through; color:#bbb; }
+.pack-item span { font-size:13px; flex:1; }
+.pack-progress { background:var(--gray2); border-radius:20px; height:6px; margin-bottom:16px; overflow:hidden; }
+.pack-progress-bar { background:linear-gradient(90deg,#E8734A,#C9A96E); height:100%; border-radius:20px; transition:width .3s; }
+
+/* NEARBY */
+.city-tabs { display:flex; gap:6px; margin-bottom:12px; overflow-x:auto; padding-bottom:4px; }
+.city-tab { padding:8px 16px; border-radius:20px; border:1.5px solid var(--gray2); background:#fff; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.city-tab.active { background:var(--maple); color:#fff; border-color:var(--maple); }
+.nearby-card { background:#fff; border-radius:var(--radius); padding:14px; margin-bottom:8px; box-shadow:var(--shadow); }
+.nearby-card .n-name { font-size:14px; font-weight:700; }
+.nearby-card .n-desc { font-size:12px; color:#666; margin:4px 0 8px; }
+
+/* FLIGHT CARD */
+.flight-card { background:#fff; border-radius:var(--radius); padding:16px; margin-bottom:12px; box-shadow:var(--shadow); }
+.flight-route { display:flex; align-items:center; gap:8px; margin:12px 0; }
+.airport { text-align:center; }
+.airport .code { font-size:22px; font-weight:900; color:var(--sky); }
+.airport .city { font-size:11px; color:#888; }
+.flight-line { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.flight-line .line { width:100%; height:2px; background:linear-gradient(90deg,var(--sky),var(--maple)); }
+.flight-info-row { display:flex; justify-content:space-between; font-size:12px; color:#666; margin-top:6px; }
+
+/* HOTEL CARD */
+.hotel-card { background:#fff; border-radius:var(--radius); padding:16px; margin-bottom:12px; box-shadow:var(--shadow); }
+.hotel-night { display:inline-block; background:var(--sky-light); color:var(--sky); border-radius:8px; padding:3px 10px; font-size:11px; font-weight:600; margin-bottom:8px; }
+.hotel-name { font-size:16px; font-weight:700; margin-bottom:4px; }
+.hotel-addr { font-size:11px; color:#888; margin-bottom:8px; }
+.hotel-price { font-size:18px; font-weight:800; color:var(--maple); }
+
+/* FOOD CARD */
+.food-card { background:#fff; border-radius:var(--radius); padding:14px; margin-bottom:8px; box-shadow:var(--shadow); }
+.food-name { font-size:14px; font-weight:700; }
+.food-type { font-size:11px; color:var(--maple); font-weight:600; }
+.food-desc { font-size:12px; color:#666; margin:4px 0; line-height:1.5; }
+.food-price { font-size:12px; color:#888; }
+
+/* SPLIT TABLE */
+.split-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+.split-table th { background:var(--cream); padding:8px; text-align:center; font-weight:600; }
+.split-table td { padding:8px; text-align:center; border-bottom:1px solid var(--gray2); }
+.balance-pos { color:#2E7D32; font-weight:700; }
+.balance-neg { color:#C62828; font-weight:700; }
+
+/* SECTION TITLE */
+.section-title { font-size:13px; font-weight:700; color:#888; text-transform:uppercase; letter-spacing:1px; margin:16px 0 8px; }
+
+/* UTILS */
+.mt8 { margin-top:8px; }
+.flex-between { display:flex; justify-content:space-between; align-items:center; }
+.chevron { transition:transform .3s; }
+.open .chevron { transform:rotate(180deg); }
+.delete-btn { background:none; border:none; color:#ddd; font-size:16px; cursor:pointer; padding:4px; }
+.delete-btn:hover { color:#e53935; }
+
+@media(prefers-color-scheme: dark) {
+  body { background:#1A0F08; color:#F5E6D3; }
+  .card, .spot-card, .nearby-card, .hotel-card, .food-card, .flight-card,
+  .person-card, .expense-item, .pack-item, .bottom-nav, .modal {
+    background:#2C1810; color:#F5E6D3;
+  }
+  .form-group input, .form-group select { background:#3D2015; color:#F5E6D3; border-color:#5C3020; }
+  .btn-small { background:#3D2015; color:#F5E6D3; border-color:#5C3020; }
+}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="maple-row">🍁🧊🍑</div>
+  <h1>帶寶寶去凍屁股</h1>
+  <div class="sub">加拿大楓葉秋遊全記錄 ❄️🍁</div>
+  <div class="sub" style="opacity:.7;font-size:11px;margin-top:2px;">2025.09.24 – 10.04 ｜ 11天10夜 ｜ 4大1小</div>
+</div>
+
+<!-- TAB PANELS -->
+<div id="tabContent">
+
+  <!-- ========== 行程 ========== -->
+  <div class="tab-panel active" id="panel-itinerary">
+    <div id="itineraryContainer"></div>
+  </div>
+
+  <!-- ========== 航班 ========== -->
+  <div class="tab-panel" id="panel-flights">
+    <p class="section-title">去程</p>
+    <div class="flight-card">
+      <div class="flex-between">
+        <div>
+          <div style="font-size:13px;color:#888;">長榮航空</div>
+          <div style="font-size:20px;font-weight:900;color:var(--maple);">BR010</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="tag tag-cost">NT$ 138,590</div>
+          <div style="font-size:11px;color:#888;margin-top:4px;">4人含稅票價</div>
+        </div>
+      </div>
+      <div class="flight-route">
+        <div class="airport"><div class="code">TPE</div><div class="city">桃園T2</div></div>
+        <div class="flight-line">
+          <div style="font-size:10px;color:#aaa;">✈️ 直飛約11小時</div>
+          <div class="line"></div>
+          <div style="font-size:10px;color:#aaa;">經日期線</div>
+        </div>
+        <div class="airport"><div class="code">YVR</div><div class="city">溫哥華</div></div>
+      </div>
+      <div class="flight-info-row">
+        <span>📅 9/24（四）23:30 起飛</span>
+        <span>📅 9/25（五）19:15 抵達</span>
+      </div>
+      <div style="background:var(--cream);border-radius:10px;padding:10px;margin-top:10px;font-size:12px;color:#666;">
+        💡 抵達後前往飯店辦理 Check-in<br>
+        188 Keefer Place, Vancouver, BC
+      </div>
+    </div>
+
+    <p class="section-title">國內段（溫哥華→卡加利）</p>
+    <div class="flight-card">
+      <div class="flex-between">
+        <div>
+          <div style="font-size:13px;color:#888;">西捷航空 WestJet</div>
+          <div style="font-size:20px;font-weight:900;color:var(--sky);">WS106</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="tag tag-cost">NT$ 26,445</div>
+        </div>
+      </div>
+      <div class="flight-route">
+        <div class="airport"><div class="code">YVR</div><div class="city">溫哥華</div></div>
+        <div class="flight-line">
+          <div style="font-size:10px;color:#aaa;">✈️ 約1.5小時</div>
+          <div class="line"></div>
+        </div>
+        <div class="airport"><div class="code">YYC</div><div class="city">卡加利</div></div>
+      </div>
+      <div class="flight-info-row">
+        <span>📅 9/28（一）08:30 起飛</span>
+        <span>📅 9/28（一）11:00 抵達</span>
+      </div>
+      <div style="background:#FFF3E0;border-radius:10px;padding:10px;margin-top:10px;font-size:12px;color:#E65100;">
+        ⚠️ 司機 5:30 來接，費用 CAD$120，只收現金（微信 Long）
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 住宿 ========== -->
+  <div class="tab-panel" id="panel-hotels">
+    <div id="hotelsContainer"></div>
+  </div>
+
+  <!-- ========== 美食 ========== -->
+  <div class="tab-panel" id="panel-food">
+    <div id="foodContainer"></div>
+  </div>
+
+  <!-- ========== 記帳 ========== -->
+  <div class="tab-panel" id="panel-expenses">
+    <div class="expense-summary">
+      <div>💰 旅行總花費</div>
+      <div class="total" id="totalAmount">計算中...</div>
+      <div class="per-person" id="perPersonAmount"></div>
+    </div>
+
+    <p class="section-title">個人統計</p>
+    <div class="person-cards" id="personCards"></div>
+
+    <div style="background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--shadow);">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px;">分攤結算</div>
+      <table class="split-table" id="splitTable"></table>
+    </div>
+
+    <p class="section-title">支出明細</p>
+    <div id="expenseList"></div>
+
+    <div style="height:80px;"></div>
+  </div>
+
+  <!-- ========== 匯率 ========== -->
+  <div class="tab-panel" id="panel-currency">
+    <div class="currency-box">
+      <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;">💱 匯率換算</h2>
+      <div style="margin-bottom:6px;font-size:12px;color:#888;">匯率設定（1 CAD = ? TWD）</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <input type="number" class="rate-input" id="rateInput" value="22.5" style="width:100px;font-size:16px;padding:8px 12px;">
+        <span style="font-size:13px;color:#888;">TWD（可手動更新）</span>
+      </div>
+
+      <div id="direction" style="font-size:13px;font-weight:700;color:var(--sky);margin-bottom:8px;">CAD → TWD</div>
+
+      <div class="currency-input-wrap">
+        <div class="currency-label" id="fromLabel">CAD</div>
+        <input type="number" id="fromInput" placeholder="0" oninput="convertCurrency()" style="flex:1;padding:12px 16px;border:2px solid var(--gray2);border-radius:12px;font-size:24px;font-weight:700;outline:none;">
+      </div>
+
+      <div style="text-align:center;margin:8px 0;">
+        <button class="flip-btn" onclick="flipCurrency()">🔄</button>
+      </div>
+
+      <div class="result-box">
+        <div class="result-amount" id="resultAmount">0</div>
+        <div class="result-label" id="toLabel">TWD</div>
+      </div>
+
+      <div style="margin-top:20px;"></div>
+      <p class="section-title">常用換算</p>
+      <div id="quickConvert"></div>
+    </div>
+  </div>
+
+  <!-- ========== 行李 ========== -->
+  <div class="tab-panel" id="panel-packing">
+    <div style="background:#fff;border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--shadow);">
+      <div class="flex-between" style="margin-bottom:8px;">
+        <div style="font-weight:700;font-size:15px;">🧳 行李清單</div>
+        <div style="font-size:12px;color:#888;" id="packProgress">0 / 0</div>
+      </div>
+      <div class="pack-progress"><div class="pack-progress-bar" id="packBar" style="width:0%"></div></div>
+      <button onclick="resetPacking()" style="font-size:11px;color:#aaa;background:none;border:none;cursor:pointer;">重設全部</button>
+    </div>
+    <div id="packingContainer"></div>
+  </div>
+
+  <!-- ========== 周邊推薦 ========== -->
+  <div class="tab-panel" id="panel-nearby">
+    <p style="font-size:13px;color:#888;margin-bottom:10px;">選擇目前所在城市，看周邊推薦景點！</p>
+    <div class="city-tabs" id="cityTabs"></div>
+    <div id="nearbyContainer"></div>
+  </div>
+
+</div>
+
+<!-- FAB (Add Expense) -->
+<button class="fab" onclick="openExpenseModal()" id="expenseFab" style="display:none;">＋</button>
+
+<!-- ADD EXPENSE MODAL -->
+<div class="modal-overlay" id="expenseModal">
+  <div class="modal">
+    <h3>新增支出</h3>
+    <div class="form-group">
+      <label>日期</label>
+      <input type="date" id="eDate" min="2025-09-24" max="2025-10-04">
+    </div>
+    <div class="form-group">
+      <label>項目名稱</label>
+      <input type="text" id="eName" placeholder="例：午餐、門票...">
+    </div>
+    <div class="form-group">
+      <label>金額</label>
+      <div style="display:flex;gap:8px;">
+        <input type="number" id="eAmount" placeholder="0" style="flex:1;">
+        <select id="eCurrency" style="width:90px;">
+          <option value="TWD">TWD</option>
+          <option value="CAD">CAD</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>類別</label>
+      <select id="eCategory">
+        <option>🍽️ 餐飲</option>
+        <option>🎫 景點門票</option>
+        <option>🚗 交通</option>
+        <option>🛍️ 購物</option>
+        <option>🏨 住宿</option>
+        <option>✈️ 機票</option>
+        <option>💊 藥品雜項</option>
+        <option>🧒 寶寶用品</option>
+        <option>其他</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>誰付的錢？</label>
+      <select id="ePaidBy">
+        <option>平平</option>
+        <option>陳威榤</option>
+        <option>媽媽</option>
+        <option>二舅舅</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>分攤給誰？（可多選）</label>
+      <div class="checkbox-group" id="splitGroup">
+        <label class="checkbox-label checked"><input type="checkbox" value="平平" checked>平平</label>
+        <label class="checkbox-label checked"><input type="checkbox" value="陳威榤" checked>陳威榤</label>
+        <label class="checkbox-label checked"><input type="checkbox" value="媽媽" checked>媽媽</label>
+        <label class="checkbox-label checked"><input type="checkbox" value="二舅舅" checked>二舅舅</label>
+        <label class="checkbox-label"><input type="checkbox" value="小寶貝">小寶貝</label>
+      </div>
+    </div>
+    <button class="btn-submit" onclick="saveExpense()">確認新增</button>
+    <button class="btn-cancel" onclick="closeExpenseModal()">取消</button>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="switchTab('itinerary')" id="nav-itinerary"><span class="ico">🗓️</span>行程</button>
+  <button class="nav-btn" onclick="switchTab('flights')" id="nav-flights"><span class="ico">✈️</span>航班</button>
+  <button class="nav-btn" onclick="switchTab('hotels')" id="nav-hotels"><span class="ico">🏨</span>住宿</button>
+  <button class="nav-btn" onclick="switchTab('food')" id="nav-food"><span class="ico">🍽️</span>美食</button>
+  <button class="nav-btn" onclick="switchTab('expenses')" id="nav-expenses"><span class="ico">💰</span>記帳</button>
+  <button class="nav-btn" onclick="switchTab('currency')" id="nav-currency"><span class="ico">💱</span>匯率</button>
+  <button class="nav-btn" onclick="switchTab('packing')" id="nav-packing"><span class="ico">🧳</span>行李</button>
+  <button class="nav-btn" onclick="switchTab('nearby')" id="nav-nearby"><span class="ico">📍</span>周邊</button>
+</nav>
+
+<script>
+// =============================================
+// DATA
+// =============================================
+const PEOPLE = ['平平','陳威榤','媽媽','二舅舅'];
+const ALL_PEOPLE = ['平平','陳威榤','媽媽','二舅舅','小寶貝'];
+let cadRate = 22.5;
+let flipMode = false; // false = CAD->TWD, true = TWD->CAD
+
+const itineraryData = [
+  {
+    date:'9/24', weekday:'四', city:'溫哥華',
+    title:'出發！搭機飛往溫哥華 ✈️',
+    emoji:'✈️',
+    color:'#1A5CA8',
+    note:'23:30 從桃園T2搭乘長榮BR010出發，隔天19:15抵達溫哥華。抵達後辦理飯店Check-in。',
+    spots:[
+      { name:'桃園國際機場 T2', emoji:'🛫', desc:'長榮航空 BR010 | 23:30起飛', cost:'機票已含', maps:'Taoyuan International Airport Terminal 2', transport:'自行前往' }
+    ]
+  },
+  {
+    date:'9/25', weekday:'五', city:'溫哥華',
+    title:'溫哥華深度探索日 🌊',
+    emoji:'🌊',
+    color:'var(--maple)',
+    spots:[
+      { name:'史丹利公園 Stanley Park', emoji:'🌲', desc:'溫哥華最有名的公園，市區內風景最美！沿著海岸跑步、騎行、聽海風散步都超棒。生態環境極佳，日落時分景色絕美。', tip:'晚飯後日落前往最美！可租自行車環繞一圈。', cost:'免費', maps:'Stanley Park Vancouver', transport:'步行/計程車/自行車' },
+      { name:'葛蘭佛島公共市場 Granville Island', emoji:'🦪', desc:'吃現開生蠔！看藝術市集。有新鮮海鮮market，各種難買到的食材這裡都有。生蠔餐廳超多，可以打包生蠔去海邊坐著吃！', tip:'可搭水上巴士Aquabus幾塊錢加幣，付現或刷卡（不支持公交卡）。建議路線：葛蘭佛玩完→坐船去Yaletown。', cost:'入場免費，消費另計', maps:'Granville Island Public Market Vancouver', transport:'公車/Aquabus水上巴士' },
+      { name:'葛蘭佛島→耶魯鎮 Aquabus', emoji:'⛵', desc:'搭乘水上巴士，體驗溫哥華獨特的水上交通！從Granville直接坐船到Yaletown，幾刀加幣，超值體驗。', cost:'約CAD$3-5', maps:'Aquabus Vancouver Granville Island', transport:'水上巴士' },
+      { name:'耶魯鎮 Yaletown', emoji:'🏙️', desc:'充滿個性的街區，可以閒逛、購物、吃飯。推薦餐廳：Social Corner Yaletown。', cost:'消費另計', maps:'Yaletown Vancouver', transport:'步行/Aquabus' },
+      { name:'煤氣鎮蒸汽鐘 Gastown', emoji:'🕙', desc:'附近有超多好逛的小店、買手店、唱片店、咖啡廳。蒸汽鐘每15分鐘鳴笛一次！晚上去很像哈利波特魔法小鎮。', tip:'晚上去超有氣氛！鵝肝飯名店PiDGiN就在附近 😋', cost:'免費', maps:'Gastown Steam Clock Vancouver', transport:'步行' },
+      { name:'加拿大廣場 Canada Place', emoji:'🏛️', desc:'溫哥華的地標建築，白色帆形屋頂非常壯觀，可以俯瞰港口和遠山。', cost:'免費', maps:'Canada Place Vancouver', transport:'步行' },
+      { name:'伊莉莎白女王公園 Queen Elizabeth Park', emoji:'👑', desc:'俯瞰溫哥華全景的絕佳地點！公園裡植物豐富，是市區內難得的高地視野。', cost:'免費', maps:'Queen Elizabeth Park Vancouver', transport:'公車/計程車' }
+    ],
+    food:['Granville Island生蠔','Social Corner Yaletown','Suyo秘魯料理（晚餐）','PiDGiN鵝肝飯（Gastown附近）'],
+    stay:'188 Keefer Place, Vancouver, BC V6B0J1'
+  },
+  {
+    date:'9/26', weekday:'六', city:'溫哥華',
+    title:'Sea to Sky 天空之旅 🚡',
+    emoji:'🚡',
+    color:'var(--forest)',
+    spots:[
+      { name:'Mamquam Falls 牛奶瀑布', emoji:'💧', desc:'壯觀的牛奶瀑布！需要包車前往，如果行程有包車則必去。', tip:'不包車就不去，交通不方便。', cost:'門票免費，包車另計', maps:'Mamquam Falls Squamish BC', transport:'包車' },
+      { name:'Sea to Sky Gondola 天空纜車', emoji:'🚡', desc:'纜車上升800公尺，約12分鐘！碧綠牛奶湖盡收眼底，雲端美景震撼！三條trail推薦：①Panorama最壯觀②Wonderland Lake走到最後有湖③Alpine Alley冒險trail（有攀爬繩）', tip:'提前線上購買 shuttle+纜車來回票CAD$112，現場購買CAD$79（只有纜車）。上車二選一：660 West Cordova（星巴克旁）am9:50 或 Hyatt酒店後門 am9:55。', cost:'線上CAD$112/人（含接駁+纜車）', maps:'Sea to Sky Gondola Squamish BC', transport:'預訂接駁車' },
+      { name:'Outbound Station 漢堡', emoji:'🍔', desc:'Sea to Sky路邊超人氣漢堡店！左手邊小房子賣漢堡，右手邊是咖啡店。double cheese burger要加多多醬料才多汁，Truffle fries超香！', tip:'Poutine一般發揮，Truffle fries必點！', cost:'約CAD$20-25/人', maps:'Outbound Station Squamish BC', transport:'步行' },
+      { name:'范杜森植物園 VanDusen Botanical Garden', emoji:'🍁', desc:'看楓葉變化的完美地點！秋天楓葉繽紛，絕對出片。', cost:'約CAD$10-15/人', maps:'VanDusen Botanical Garden Vancouver', transport:'公車/計程車' },
+      { name:'日落海灘 Sunset Beach', emoji:'🌅', desc:'等待溫哥華的完美日落！海天一線，光線絕美，是一天完美的收尾。', cost:'免費', maps:'Sunset Beach Vancouver', transport:'步行/公車' }
+    ],
+    food:['Outbound Station漢堡（午餐）','Granville Island生蠔'],
+    stay:'188 Keefer Place, Vancouver, BC V6B0J1'
+  },
+  {
+    date:'9/27', weekday:'日', city:'溫哥華',
+    title:'卡皮拉諾+UBC 探索日 🌉',
+    emoji:'🌉',
+    color:'var(--brown-light)',
+    spots:[
+      { name:'Cambridge Street 賞楓', emoji:'🍁', desc:'劍橋街是溫哥華秋天賞楓的熱門地點，楓葉紅橙金三色交織，出片超美！', cost:'免費', maps:'Cambridge Street Vancouver', transport:'步行/公車' },
+      { name:'卡皮拉諾吊橋公園', emoji:'🌉', desc:'懸掛在峽谷上方的吊橋，搖搖晃晃非常刺激！周邊還有樹頂探險和峽谷棧道，體驗森林在高空中行走的感覺。', cost:'約CAD$50-60/人', maps:'Capilano Suspension Bridge Park Vancouver', transport:'公車/計程車' },
+      { name:'Cliff House 森林餐廳', emoji:'🌲', desc:'藏在森林裡的神秘餐廳！不是走吊橋的路線，而是在樹梢高度吃飯，視角完全不同。很多本地人都不知道這裡！', tip:'記得提前訂位！', cost:'午餐約CAD$30-50/人', maps:'Cliff House Restaurant Vancouver', transport:'步行（附近卡皮拉諾）' },
+      { name:'英屬哥倫比亞大學 UBC', emoji:'🏫', desc:'加拿大最美的校園之一，挨著海邊，有幽靜的樹林和花園。校園本身就是一道美麗的風景。如果正趕上楓葉季更美！', cost:'免費', maps:'University of British Columbia Vancouver', transport:'公車49/99-B線' },
+      { name:'PiDGiN 鵝肝飯', emoji:'🍜', desc:'心目中溫哥華最好吃的鵝肝飯！在Gastown附近，飯店周邊。一定要去吃！', cost:'約CAD$40-60/人', maps:'PiDGiN Restaurant Vancouver', transport:'步行' }
+    ],
+    food:['Cliff House森林餐廳（午餐）','PiDGiN鵝肝飯（晚餐推薦）'],
+    stay:'188 Keefer Place, Vancouver, BC V6B0J1'
+  },
+  {
+    date:'9/28', weekday:'一', city:'班夫',
+    title:'飛往卡加利 → 進入班夫 🏔️',
+    emoji:'🏔️',
+    color:'#5C6BC0',
+    note:'5:30 司機來接（CAD$120現金），搭乘WS106到卡加利，Budget取租車，前往卡納那斯基斯，黃昏到達硃砂湖欣賞倒映雪山的日落。',
+    spots:[
+      { name:'卡納那斯基斯 Kananaskis', emoji:'⛰️', desc:'壯闊的山區風光！可以走Ptarmigan Cirque、Pocaterra Ridge、Arethusa Cirque、Wedge Pond等步道，遠離人群的純淨山景。', cost:'停車費約CAD$10-15', maps:'Kananaskis Country Alberta', transport:'自駕' },
+      { name:'Ptarmigan Cirque 步道', emoji:'🦅', desc:'高山冰斗地形，秋天高山草甸和岩石景觀極美！視野開闊，可見壯闊山脊線。', cost:'含於Kananaskis門票', maps:'Ptarmigan Cirque Kananaskis', transport:'自駕後步行' },
+      { name:'Wedge Pond 楔形湖', emoji:'💧', desc:'靜謐的高山湖泊，倒映山景，秋天景色特別迷人。', cost:'免費', maps:'Wedge Pond Kananaskis', transport:'自駕' },
+      { name:'硃砂湖 Vermilion Lakes', emoji:'🌅', desc:'美得不像話！濕地倒映雪山，日落時分整個湖都是橘子汽水色🍊 打卡姿勢：面對湖水張開手臂！建議日落前1小時到，光影最浪漫。傳說晚上9點後沿Canada Goose那條小路往裡走可能看到極光！', tip:'⚠️ 日落前1小時到！有極光機會（晚上9點後）', cost:'免費', maps:'Vermilion Lakes Banff Alberta', transport:'自駕' }
+    ],
+    food:['The Maple Leaf班夫牛排（CAD$70-100/人）'],
+    stay:'218 Beaver Street, Banff, AB T1L（Airbnb）'
+  },
+  {
+    date:'9/29', weekday:'二', city:'班夫',
+    title:'班夫國家公園探索 🏊',
+    emoji:'🏊',
+    color:'var(--maple)',
+    spots:[
+      { name:'明尼萬卡湖 Lake Minnewanka', emoji:'🚢', desc:'可以游船體驗！湖面廣闊，背後是層疊的山脈，是班夫地區最大的湖泊。游船可以深入湖區，欣賞懸崖峭壁。', cost:'游船約CAD$50/人', maps:'Lake Minnewanka Banff Alberta', transport:'自駕' },
+      { name:'約翰斯頓峽谷 Johnston Canyon', emoji:'💦', desc:'水流湍急，景色壯觀！峽谷步道沿著瀑布而建，有Upper Falls和Lower Falls兩個瀑布，棧道緊貼岩壁，非常震撼。', cost:'停車費約CAD$10', maps:'Johnston Canyon Banff Alberta', transport:'自駕後步行' },
+      { name:'弓河瀑布 Bow Falls', emoji:'🌊', desc:'位於班夫小鎮附近，瀑布寬廣，氣勢磅礴。步行即可到達，是班夫必打卡景點。', cost:'免費', maps:'Bow Falls Banff Alberta', transport:'步行' },
+      { name:'硫磺山纜車 Sulphur Mountain', emoji:'🌁', desc:'搭纜車俯瞰班夫小鎮！山頂視野360度，可以看到班夫小鎮、弓河谷地和遠處雪山的全景。', cost:'約CAD$30-40/人', maps:'Sulphur Mountain Gondola Banff', transport:'自駕後搭纜車' },
+      { name:'班夫上溫泉 Banff Upper Hot Springs', emoji:'♨️', desc:'5pm來泡！溫泉水帶著淡淡硫磺味，邊泡邊俯瞰小鎮，非常愜意。有更衣間/衝澡區/衣服甩乾桶。旁邊有條trail爬完直接泡溫泉超放鬆！', tip:'費用CAD$17.5/人含稅。建議5pm前往，傍晚景色最美！', cost:'CAD$17.5/人', maps:'Banff Upper Hot Springs', transport:'自駕' },
+      { name:'班夫小鎮散策', emoji:'🏘️', desc:'歐式建築配雪山背景，極具特色！鎮上可以閒逛、騎車、購物或泡溫泉。', cost:'消費另計', maps:'Banff Avenue Banff Alberta', transport:'步行' }
+    ],
+    food:['The Grizzly House瑞士火鍋（晚餐）'],
+    stay:'218 Beaver Street, Banff, AB T1L（Airbnb）'
+  },
+  {
+    date:'9/30', weekday:'三', city:'賈斯珀',
+    title:'冰原大道 → 賈斯珀 🧊',
+    emoji:'🧊',
+    color:'#37474F',
+    note:'沿著冰原大道（Icefields Parkway）往北開，一路參觀湖泊與冰川，最後抵達賈斯珀小鎮。',
+    spots:[
+      { name:'弓湖 Bow Lake', emoji:'💙', desc:'冰河融水形成的碧藍色湖泊，倒映著白雪皚皚的山峰。湖邊步道輕鬆易走，景色絕美。', cost:'免費', maps:'Bow Lake Alberta', transport:'自駕' },
+      { name:'佩托湖 Peyto Lake', emoji:'💚', desc:'獨特的藍綠色湖水，形狀像一隻狐狸，是冰原大道最具代表性的景點之一！登高俯瞰全景，視野絕佳。', cost:'停車費', maps:'Peyto Lake Alberta', transport:'自駕後步行' },
+      { name:'哥倫比亞冰原 Columbia Icefield', emoji:'❄️', desc:'北美最大的冰原之一！可乘坐特製冰川探險車直接上冰川，近距離接觸萬年冰川。還有天空步道（Skywalk），懸空玻璃步道俯瞰峽谷，超震撼！', tip:'⚠️ 天空步道風很大，一定要穿衝鋒衣！', cost:'冰川車約CAD$50+/人', maps:'Columbia Icefield Jasper Alberta', transport:'自駕' },
+      { name:'阿薩巴斯卡瀑布 Athabasca Falls', emoji:'🌊', desc:'聲勢浩大的瀑布！雖然高度不高，但水量極大，沖力驚人。周圍奇石林立，地質景觀豐富。', cost:'免費', maps:'Athabasca Falls Jasper Alberta', transport:'自駕' },
+      { name:'賈斯珀小鎮 Jasper Town', emoji:'🏔️', desc:'賈斯珀國家公園內的小鎮，比班夫更原始自然，人潮較少。小鎮風格輕鬆愜意，wildlife機率高。', cost:'消費另計', maps:'Jasper Alberta', transport:'步行' }
+    ],
+    food:['The Raven Bistro（晚餐）'],
+    stay_note:'平平+陳威榤+小寶貝：Whistler\'s Inn（105 Miette Ave, Jasper）\n媽媽+二舅舅：Astoria Hotel（404 Connaught Drive, Jasper）'
+  },
+  {
+    date:'10/1', weekday:'四', city:'露易絲湖',
+    title:'瑪琳湖 → 露易絲湖城堡下午茶 🏰',
+    emoji:'🏰',
+    color:'#6A1B9A',
+    note:'已事先訂好瑪琳湖游船！坐船去精靈島，晴天湖面波光粼粼很美，背景雪山超有氛圍。',
+    spots:[
+      { name:'瑪琳峽谷 Maligne Canyon', emoji:'🪨', desc:'壯觀的石灰岩峽谷，流水侵蝕形成的天然奇景。步道沿峽谷邊緣行走，可俯瞰深邃的峽谷底部。', cost:'免費', maps:'Maligne Canyon Jasper Alberta', transport:'自駕' },
+      { name:'瑪琳湖 Maligne Lake（游船）', emoji:'⛵', desc:'已訂游船！坐船去精靈島，晴天湖面波光粼粼，背景雪山非常有氛圍，適合拍照。', tip:'游船已預訂，請確認時間！晴天必去，陰天也很美。', cost:'游船已訂', maps:'Maligne Lake Jasper Alberta', transport:'自駕' },
+      { name:'露易絲湖 Lake Louise', emoji:'💚', desc:'淺綠色夢幻湖水，背後是維多利亞冰川，是加拿大最著名的景點。可以爬到Fairview Lookout看全景！', cost:'停車費', maps:'Lake Louise Alberta', transport:'自駕' },
+      { name:'費爾蒙露易絲湖城堡酒店下午茶', emoji:'☕', desc:'百年古堡酒店，湖畔下午茶是極致體驗！正宗英式下午茶配絕美湖景，是旅行中的貴族享受。', tip:'⚠️ 強烈建議提前訂位！', cost:'約CAD$80-100/人', maps:'Fairmont Chateau Lake Louise', transport:'步行（從湖邊）' },
+      { name:'莫蘭特彎道 Morant\'s Curve', emoji:'🚂', desc:'鐵路攝影聖地！等待火車通過的瞬間，配合背後雪山，是經典的加拿大風景畫面。', cost:'免費', maps:"Morant's Curve Lake Louise Alberta", transport:'自駕' }
+    ],
+    food:['費爾蒙城堡酒店下午茶','The Post Hotel Dining Room（晚餐 6:45pm 已預約）'],
+    stay:'Mountaineer Lodge，101 Village Road, Lake Louise, AB'
+  },
+  {
+    date:'10/2', weekday:'五', city:'卡加利',
+    title:'夢蓮湖 → 翡翠湖 → 返回卡加利 🚗',
+    emoji:'🚗',
+    note:'晚上7:30前還車到卡加利機場Budget，可先飯店check-in後陳威榤開車去還，其他人在飯店等。',
+    spots:[
+      { name:'夢蓮湖 Moraine Lake', emoji:'💎', desc:'網紅打卡地！早上去霧氣籠罩藍色湖面，完全是仙境。沿著湖走很輕鬆，也可以選擇划船。一定要早去才有最美霧氣！', tip:'⚠️ 強烈建議早上6-7點到！停車位非常有限，晚了可能進不去。', cost:'停車費', maps:'Moraine Lake Lake Louise Alberta', transport:'自駕（早去！）' },
+      { name:'翡翠湖 Emerald Lake', emoji:'💚', desc:'優若鵝國家公園的翡翠色湖泊，四周林木環繞。可以划獨木舟或在湖邊木屋餐廳享用午餐。', cost:'停車費', maps:'Emerald Lake Yoho National Park', transport:'自駕' },
+      { name:'天然橋 Natural Bridge', emoji:'🌉', desc:'河水侵蝕形成的天然石橋，地質奇觀！就在翡翠湖附近，順道必看。', cost:'免費', maps:'Natural Bridge Yoho National Park', transport:'自駕' },
+      { name:'卡加利市區', emoji:'🏙️', desc:'回到卡加利！還車後可以在市區放鬆。飯店有附早餐，好好休息準備後兩天。', cost:'消費另計', maps:'Calgary Downtown Alberta', transport:'計程車/Uber' }
+    ],
+    food:['Charcut（晚餐）'],
+    stay:'Homewood Suites by Hilton Calgary Downtown，Suite B - 711 4th St SE（含早餐）'
+  },
+  {
+    date:'10/3', weekday:'六', city:'卡加利',
+    title:'Shawn\'s Wedding 🎊 + 卡加利市區',
+    emoji:'🎊',
+    note:'Shawn的婚禮！週六Stephen Avenue有農夫市集，趁機逛逛。',
+    spots:[
+      { name:'Stephen Avenue Walk 農夫市集', emoji:'🛍️', desc:'週六有農夫市集！各種本地農產品、手工藝品、街頭表演。卡加利市中心最熱鬧的步行街。', cost:'消費另計', maps:'Stephen Avenue Walk Calgary', transport:'步行' },
+      { name:'The Bow Building 弓形大樓', emoji:'🏗️', desc:'卡加利最具特色的摩天大樓，弧形外型優雅壯觀，是城市天際線的代表。', cost:'免費（外觀）', maps:'The Bow Building Calgary', transport:'步行' },
+      { name:'仙境雕塑 Wonderland Sculpture', emoji:'🗿', desc:'卡加利地標藝術裝置，巨大的頭部雕塑內部可以進入，是熱門打卡點！', cost:'免費', maps:'Wonderland Sculpture Calgary', transport:'步行' },
+      { name:'Shawn\'s Wedding 婚禮', emoji:'💒', desc:'美好的婚禮祝福！記得準備好禮服。', cost:'紅包另計', maps:'Calgary', transport:'' }
+    ],
+    stay:'Homewood Suites by Hilton Calgary Downtown（含早餐）'
+  },
+  {
+    date:'10/4', weekday:'日', city:'卡加利',
+    title:'卡加利文化巡禮 最後一天 📚',
+    emoji:'📚',
+    spots:[
+      { name:'卡加利中央圖書館 Central Library', emoji:'📚', desc:'被評為世界最美圖書館之一！外型獨特，室內設計令人驚嘆。就算不借書也值得專程前往參觀。', cost:'免費', maps:'Calgary Central Library', transport:'步行/輕軌' },
+      { name:'Studio Bell 國家音樂中心', emoji:'🎵', desc:'加拿大音樂的發源地！互動式音樂博物館，可以親自演奏各種樂器，了解加拿大音樂史。', cost:'約CAD$18/人', maps:'Studio Bell National Music Centre Calgary', transport:'步行' },
+      { name:'Platform 文創空間', emoji:'🎨', desc:'卡加利新興文創聚落，有各種小眾藝廊、咖啡廳和設計師品牌。', cost:'消費另計', maps:'Platform Calgary', transport:'步行' },
+      { name:'德文郡花園 Devonian Gardens', emoji:'🌿', desc:'位於室內的巨型花園，在購物中心頂層！四季常綠，是城市中的綠色綠洲。', cost:'免費', maps:'Devonian Gardens Calgary', transport:'步行' },
+      { name:'Stephen Avenue 小眾買手店', emoji:'🛍️', desc:'週日可以逛更多小眾買手店！各種本地設計師品牌和精品店，帶些特別的回憶回家。', cost:'消費另計', maps:'Stephen Avenue Walk Calgary', transport:'步行' },
+      { name:'Core Shopping Center', emoji:'🏬', desc:'卡加利最大的購物中心，最後血拼機會！連接地下城，雨天也方便逛。', cost:'消費另計', maps:'Core Shopping Center Calgary', transport:'步行' }
+    ],
+    stay:'Homewood Suites by Hilton Calgary Downtown（含早餐）'
+  }
+];
+
+const hotelsData = [
+  { nights:'9/24抵達 – 9/27（4晚）', name:'溫哥華市中心飯店', addr:'188 Keefer Place, Vancouver, BC V6B0J1', price:'NT$ 43,507.82', note:'4人均攤', who:'全員', maps:'188 Keefer Place Vancouver' },
+  { nights:'9/28 – 9/29（2晚）', name:'班夫 Airbnb', addr:'218 Beaver Street, Banff, AB T1L', price:'NT$ 26,349.09', note:'4人均攤（含小寶貝）', who:'平平+陳威榤+媽媽+二舅舅', maps:'218 Beaver Street Banff Alberta' },
+  { nights:'9/30（1晚）', name:'Whistler\'s Inn', addr:'105 Miette Ave, Jasper, AB T0E1E0', price:'NT$ 12,182', note:'平平+陳威榤+小寶貝', who:'平平+陳威榤', maps:"Whistler's Inn Jasper Alberta" },
+  { nights:'9/30（1晚）', name:'Astoria Hotel', addr:'404 Connaught Drive, Jasper, AB T0E1E0', price:'NT$ 9,321', note:'媽媽+二舅舅', who:'媽媽+二舅舅', maps:'Astoria Hotel Jasper Alberta' },
+  { nights:'10/1（1晚）', name:'Mountaineer Lodge', addr:'101 Village Road, Lake Louise, AB T0L1E0', price:'NT$ 11,582', note:'4人均攤', who:'全員', maps:'Mountaineer Lodge Lake Louise Alberta' },
+  { nights:'10/2 – 10/4（2晚）', name:'Homewood Suites by Hilton Calgary Downtown', addr:'Suite B - 711 4th St. SE, Calgary, AB T2G1N3', price:'NT$ 17,076.56', note:'4人均攤（含早餐）', who:'全員', maps:'Homewood Suites Hilton Calgary Downtown' }
+];
+
+const foodData = {
+  '溫哥華': [
+    { name:'Granville Island 生蠔', type:'海鮮', desc:'Granville Island Public Market現開生蠔，新鮮到爆！打包帶到海邊吃超愜意。', price:'CAD$3-5/顆', maps:'Granville Island Public Market Vancouver' },
+    { name:'PiDGiN Restaurant', type:'創意亞洲料理', desc:'心目中溫哥華最好吃的鵝肝飯！在Gastown附近，必吃！', price:'約CAD$40-60/人', maps:'PiDGiN Restaurant Vancouver' },
+    { name:'Social Corner Yaletown', type:'餐廳/酒吧', desc:'Yaletown推薦餐廳，氛圍好、食物好、位置好。', price:'約CAD$30-50/人', maps:'Social Corner Yaletown Vancouver' },
+    { name:'Suyo', type:'秘魯料理', desc:'獨特的秘魯風味，在溫哥華難得一見。', price:'約CAD$40-60/人', maps:'Suyo Restaurant Vancouver' },
+    { name:'Outbound Station', type:'漢堡', desc:'Sea to Sky旁邊的人氣漢堡店！double cheese burger多加醬料超美味。', price:'約CAD$20-25/人', maps:'Outbound Station Squamish BC' }
+  ],
+  '班夫': [
+    { name:'The Maple Leaf', type:'牛排/加拿大料理', desc:'班夫最受歡迎牛排餐廳之一！招牌：18oz Alberta Cowboy Steak、Seafood Linguine、Maple Salmon & Prawns。', price:'CAD$70-100/人', maps:'The Maple Leaf Restaurant Banff' },
+    { name:'The Grizzly House', type:'瑞士火鍋', desc:'班夫超有特色的瑞士火鍋餐廳！起司鍋、肉類火鍋都有，很適合秋冬暖身。', price:'約CAD$50-80/人', maps:'The Grizzly House Banff' }
+  ],
+  '賈斯珀': [
+    { name:'The Raven Bistro', type:'輕食/餐廳', desc:'賈斯珀小鎮推薦餐廳，當地人喜愛的輕鬆用餐氛圍。', price:'約CAD$30-50/人', maps:'The Raven Bistro Jasper Alberta' }
+  ],
+  '露易絲湖': [
+    { name:'費爾蒙城堡下午茶', type:'英式下午茶', desc:'百年城堡酒店的英式下午茶，配湖景，是此行最高級的享受！提前訂位！', price:'約CAD$80-100/人', maps:'Fairmont Chateau Lake Louise' },
+    { name:'The Post Hotel Dining Room', type:'精緻餐廳', desc:'連續20年贏得Wine Spectator Award，北美Top 5酒窖！已預約6:45pm。', price:'約CAD$100+/人', maps:'The Post Hotel Lake Louise Alberta' }
+  ],
+  '卡加利': [
+    { name:'Charcut', type:'現代加拿大料理', desc:'卡加利時尚餐廳，以現代手法詮釋加拿大在地食材。適合最後一晚豪華慶祝！', price:'約CAD$60-80/人', maps:'Charcut Calgary' }
+  ]
+};
+
+const nearbyData = {
+  '溫哥華': [
+    { name:'Lynn Canyon Park', emoji:'🌿', desc:'免費的吊橋公園！相比卡皮拉諾人少很多，景色同樣壯觀，是當地人秘密景點。', maps:'Lynn Canyon Park North Vancouver' },
+    { name:'Lonsdale Quay Market', emoji:'🛥️', desc:'可搭渡輪到北溫哥華的市場！有各種本地食材和手工藝品，體驗當地生活。', maps:'Lonsdale Quay Market North Vancouver' },
+    { name:'Mount Seymour 西摩爾山', emoji:'🏔️', desc:'距市區最近的山！可以開車到山頂，秋天景色美麗，冬天可滑雪。', maps:'Mount Seymour Provincial Park' },
+    { name:'Deep Cove 深灣', emoji:'⛵', desc:'適合划獨木舟的寧靜海灣，配山景，是溫哥華最美的角落之一。', maps:'Deep Cove Vancouver' },
+    { name:'Chinatown溫哥華中國城', emoji:'🏮', desc:'歷史悠久的唐人街，有正宗廣東美食和各種亞洲食材超市。', maps:'Chinatown Vancouver BC' }
+  ],
+  '班夫': [
+    { name:'Sunshine Village 陽光村滑雪場', emoji:'⛷️', desc:'班夫最有名的滑雪場，秋天也可以健行，是夏末秋初的高山體驗。', maps:'Sunshine Village Banff Alberta' },
+    { name:'Lake Louise Ski Resort', emoji:'🎿', desc:'露易絲湖滑雪場，秋天纜車可搭，俯瞰露易絲湖和周邊山景。', maps:'Lake Louise Ski Resort Alberta' },
+    { name:'Banff Gondola 班夫纜車', emoji:'🚡', desc:'硫磺山纜車，俯瞰班夫小鎮和弓河谷全景的最佳視角。', maps:'Banff Gondola Sulphur Mountain' },
+    { name:'Cascade Gardens', emoji:'🌸', desc:'班夫政府大樓旁的英式花園，免費入場，秋天別有風情。', maps:'Cascade Gardens Banff Alberta' }
+  ],
+  '賈斯珀': [
+    { name:'Pyramid Lake 金字塔湖', emoji:'🔺', desc:'賈斯珀附近的美麗高山湖泊，可以划獨木舟。湖上有小島，景色迷人。', maps:'Pyramid Lake Jasper Alberta' },
+    { name:'Beauvert Lake 博韋特湖', emoji:'💙', desc:'費爾蒙賈斯珀公園小屋旁的湖，可以劃獨木舟，秋天楓葉倒映超美。', maps:'Lake Beauvert Jasper Alberta' },
+    { name:'Jasper SkyTram 天空纜車', emoji:'🚡', desc:'搭纜車到海拔2,277公尺的哨兵山，360度俯瞰賈斯珀國家公園。', maps:'Jasper SkyTram Alberta' },
+    { name:'Medicine Lake 醫藥湖', emoji:'🌊', desc:'季節性縮水的神奇湖泊，因地下暗河而水位變化劇烈，是地質奇景。', maps:'Medicine Lake Jasper Alberta' }
+  ],
+  '卡加利': [
+    { name:'Heritage Park 遺產公園', emoji:'🏘️', desc:'加拿大最大的活歷史公園！完整重現19世紀西部小鎮生活，有蒸汽火車、馬車等。', maps:'Heritage Park Calgary' },
+    { name:'Calgary Zoo 卡加利動物園', emoji:'🦁', desc:'世界知名的卡加利動物園，有各種北美野生動物和熱帶動物。', maps:'Calgary Zoo Alberta' },
+    { name:'Prince\'s Island Park', emoji:'🌳', desc:'市中心的美麗島嶼公園，沿弓河而建，是城市裡的綠色天堂。', maps:"Prince's Island Park Calgary" },
+    { name:'Eau Claire Market', emoji:'🛒', desc:'河畔市場，有各種餐廳、電影院和精品店。週末有農夫市集。', maps:'Eau Claire Market Calgary' }
+  ]
+};
+
+const packingData = [
+  { cat:'👤 個人證件', items:['護照（有效期>6個月）','簽證（eTA電子旅行授權）','信用卡（VISA/Master）','國際駕照（需自駕）','美金現金','加幣現金（CAD$200以上）','緊急聯絡卡'] },
+  { cat:'🧒 寶寶必備', items:['嬰兒食品/副食品','配方奶粉','奶瓶/消毒碗','紙尿褲（多帶）','濕紙巾','嬰兒推車','嬰兒背帶','換洗衣物（多帶）','嬰兒毛毯','嬰兒帽子手套','嬰兒洗澡用品','安撫玩具','嬰兒藥品（退燒/感冒）'] },
+  { cat:'👗 衣物', items:['保暖外套（衝鋒衣必備！）','毛衣/厚長袖 x3','薄長袖 x3','長褲 x3','內衣褲（多帶）','厚襪子','防水登山鞋','輕便休閒鞋','泳衣（溫泉用）','圍巾','手套（山區必備）','帽子'] },
+  { cat:'💊 藥品/保健', items:['腸胃藥','感冒藥','止痛藥','暈車藥','防曬乳 SPF50+','保濕乳液（乾燥氣候）','護唇膏','OK繃/碘酒','防蚊液','眼藥水'] },
+  { cat:'📱 3C/電器', items:['手機充電器','行動電源','相機+充電器','記憶卡（多帶）','轉接頭（加拿大Type A/B）','耳機','筆電（可選）','網路分享器/SIM卡'] },
+  { cat:'🎒 行李打包', items:['行李箱（托運）','隨身背包','頸枕（飛機用）','眼罩','耳塞','保溫杯','環保袋','夾鏈袋（分裝液體）','行李秤','雨傘/摺疊傘'] },
+  { cat:'🍼 特別準備', items:['嬰兒椅（確認飯店有否）','嬰兒監視器（輕量）','嬰兒防曬','嬰兒清洗手套'] }
+];
+
+// =============================================
+// EXPENSES (localStorage)
+// =============================================
+const EXPENSE_KEY = 'canada_trip_expenses_v2';
+
+const defaultExpenses = [
+  { id:1, date:'2025-09-24', name:'長榮機票 BR010', amount:138590, currency:'TWD', category:'✈️ 機票', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:2, date:'2025-09-24', name:'溫哥華飯店（4晚）', amount:43507.82, currency:'TWD', category:'🏨 住宿', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:3, date:'2025-09-28', name:'西捷機票 WS106', amount:26445, currency:'TWD', category:'✈️ 機票', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:4, date:'2025-09-28', name:'租車（trips.com）', amount:19019, currency:'TWD', category:'🚗 交通', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:5, date:'2025-09-28', name:'班夫 Airbnb（2晚）', amount:26349.09, currency:'TWD', category:'🏨 住宿', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:6, date:'2025-09-30', name:'Whistler\'s Inn 賈斯珀', amount:12182, currency:'TWD', category:'🏨 住宿', paidBy:'平平', splitWith:['平平','陳威榤'] },
+  { id:7, date:'2025-09-30', name:'Astoria Hotel 賈斯珀', amount:9321, currency:'TWD', category:'🏨 住宿', paidBy:'媽媽', splitWith:['媽媽','二舅舅'] },
+  { id:8, date:'2025-10-01', name:'Mountaineer Lodge 露易絲湖', amount:11582, currency:'TWD', category:'🏨 住宿', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:9, date:'2025-10-02', name:'Homewood Suites 卡加利（2晚）', amount:17076.56, currency:'TWD', category:'🏨 住宿', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] },
+  { id:10, date:'2025-09-28', name:'司機接機費', amount:2700, currency:'TWD', category:'🚗 交通', paidBy:'平平', splitWith:['平平','陳威榤','媽媽','二舅舅'] }
+];
+
+function getExpenses() {
+  try {
+    const saved = localStorage.getItem(EXPENSE_KEY);
+    return saved ? JSON.parse(saved) : defaultExpenses;
+  } catch(e) { return defaultExpenses; }
+}
+
+function saveExpenses(expenses) {
+  localStorage.setItem(EXPENSE_KEY, JSON.stringify(expenses));
+}
+
+// =============================================
+// RENDER: ITINERARY
+// =============================================
+function renderItinerary() {
+  const container = document.getElementById('itineraryContainer');
+  container.innerHTML = itineraryData.map((day, i) => {
+    const spotsHTML = (day.spots || []).map(s => `
+      <div class="spot-card">
+        <div class="spot-name">${s.emoji} ${s.name}</div>
+        <div class="spot-desc">${s.desc}</div>
+        ${s.tip ? `<div class="spot-tip">💡 ${s.tip}</div>` : ''}
+        <div class="spot-actions">
+          ${s.cost ? `<span class="tag ${s.cost.includes('免費') ? 'tag-free' : 'tag-cost'}">${s.cost}</span>` : ''}
+          ${s.transport ? `<span class="tag tag-tip">🚌 ${s.transport}</span>` : ''}
+          <a class="btn-map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.maps)}" target="_blank">📍 Google Maps</a>
+        </div>
+      </div>
+    `).join('');
+    const foodHTML = day.food ? `<div style="background:var(--cream);border-radius:12px;padding:10px;margin-bottom:8px;"><div style="font-size:12px;font-weight:700;color:var(--maple);margin-bottom:6px;">🍽️ 今日美食</div>${day.food.map(f=>`<div style="font-size:12px;color:#555;padding:2px 0;">• ${f}</div>`).join('')}</div>` : '';
+    const stayHTML = day.stay ? `<div style="background:var(--sky-light);border-radius:12px;padding:10px;font-size:12px;color:var(--sky);margin-bottom:8px;">🏨 ${day.stay}</div>` : '';
+    const stayNoteHTML = day.stay_note ? `<div style="background:var(--sky-light);border-radius:12px;padding:10px;font-size:12px;color:var(--sky);margin-bottom:8px;white-space:pre-line;">🏨 ${day.stay_note}</div>` : '';
+    const noteHTML = day.note ? `<div style="background:var(--cream);border-radius:12px;padding:10px;font-size:12px;color:#666;margin-bottom:8px;">📝 ${day.note}</div>` : '';
+
+    return `
+      <div class="day-header" onclick="toggleDay(${i})" id="dayHead${i}">
+        <div>
+          <div class="date-badge">09/${day.date.includes('10/') ? day.date.replace('10/','10月') : day.date.replace('9/','9月')} 週${day.weekday}</div>
+          <h2 style="margin-top:4px;">${day.emoji} ${day.title}</h2>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="day-body" id="dayBody${i}">
+        ${noteHTML}${spotsHTML}${foodHTML}${stayHTML}${stayNoteHTML}
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleDay(i) {
+  const body = document.getElementById(`dayBody${i}`);
+  const head = document.getElementById(`dayHead${i}`);
+  body.classList.toggle('open');
+  head.classList.toggle('open');
+}
+
+// =============================================
+// RENDER: HOTELS
+// =============================================
+function renderHotels() {
+  const container = document.getElementById('hotelsContainer');
+  container.innerHTML = `
+    <div class="card" style="background:linear-gradient(135deg,#4A7FA5,#7BAEC8);color:#fff;margin-bottom:16px;">
+      <div style="font-size:14px;opacity:.85;">住宿總花費</div>
+      <div style="font-size:28px;font-weight:900;">NT$ 120,018.41</div>
+      <div style="font-size:12px;opacity:.75;margin-top:4px;">6處住宿 × 10晚</div>
+    </div>
+    ${hotelsData.map(h => `
+      <div class="hotel-card">
+        <div class="hotel-night">${h.nights}</div>
+        <div class="hotel-name">🏨 ${h.name}</div>
+        <div class="hotel-addr">📍 ${h.addr}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <div class="hotel-price">${h.price}</div>
+          <span class="tag tag-tip">${h.note}</span>
+        </div>
+        <a class="btn-map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.maps)}" target="_blank">📍 Google Maps</a>
+      </div>
+    `).join('')}
+  `;
+}
+
+// =============================================
+// RENDER: FOOD
+// =============================================
+function renderFood() {
+  const container = document.getElementById('foodContainer');
+  container.innerHTML = Object.entries(foodData).map(([city, items]) => `
+    <p class="section-title">${city}</p>
+    ${items.map(f => `
+      <div class="food-card">
+        <div class="flex-between">
+          <div class="food-name">${f.name}</div>
+          <span class="tag tag-food">${f.type}</span>
+        </div>
+        <div class="food-desc">${f.desc}</div>
+        <div class="flex-between">
+          <div class="food-price">💰 ${f.price}</div>
+          <a class="btn-map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.maps)}" target="_blank">📍 Maps</a>
+        </div>
+      </div>
+    `).join('')}
+  `).join('');
+}
+
+// =============================================
+// EXPENSES
+// =============================================
+function renderExpenses() {
+  const expenses = getExpenses();
+  const rate = parseFloat(document.getElementById('rateInput')?.value || 22.5);
+
+  // Calculate totals in TWD
+  const toTWD = (e) => e.currency === 'CAD' ? e.amount * rate : e.amount;
+  const totalTWD = expenses.reduce((s,e) => s + toTWD(e), 0);
+
+  document.getElementById('totalAmount').textContent = `NT$ ${totalTWD.toLocaleString('zh-TW', {maximumFractionDigits:0})}`;
+  document.getElementById('perPersonAmount').textContent = `每人約 NT$ ${Math.round(totalTWD/4).toLocaleString('zh-TW')}（4人均攤基準）`;
+
+  // Per person: paid vs owed
+  const paidByPerson = {};
+  const owedByPerson = {};
+  PEOPLE.forEach(p => { paidByPerson[p]=0; owedByPerson[p]=0; });
+
+  expenses.forEach(e => {
+    const amt = toTWD(e);
+    if(paidByPerson[e.paidBy] !== undefined) paidByPerson[e.paidBy] += amt;
+    const splitters = e.splitWith.filter(p => PEOPLE.includes(p));
+    if(splitters.length>0) {
+      const share = amt / splitters.length;
+      splitters.forEach(p => { if(owedByPerson[p]!==undefined) owedByPerson[p] += share; });
+    }
+  });
+
+  // Person cards
+  document.getElementById('personCards').innerHTML = PEOPLE.map(p => `
+    <div class="person-card">
+      <div class="name">${p}</div>
+      <div class="amount">NT$ ${Math.round(owedByPerson[p]).toLocaleString()}</div>
+      <div class="paid">已付 NT$ ${Math.round(paidByPerson[p]).toLocaleString()}</div>
+    </div>
+  `).join('');
+
+  // Split table (balance = paid - owed)
+  const balances = PEOPLE.map(p => ({ name:p, balance: paidByPerson[p] - owedByPerson[p] }));
+  document.getElementById('splitTable').innerHTML = `
+    <tr><th>姓名</th><th>應付</th><th>已付</th><th>結算</th></tr>
+    ${balances.map(b => `
+      <tr>
+        <td>${b.name}</td>
+        <td>NT$ ${Math.round(owedByPerson[b.name]).toLocaleString()}</td>
+        <td>NT$ ${Math.round(paidByPerson[b.name]).toLocaleString()}</td>
+        <td class="${b.balance>=0?'balance-pos':'balance-neg'}">${b.balance>=0?'+':''}NT$ ${Math.round(b.balance).toLocaleString()}</td>
+      </tr>
+    `).join('')}
+  `;
+
+  // Expense list
+  const sorted = [...expenses].sort((a,b) => b.id-a.id);
+  document.getElementById('expenseList').innerHTML = sorted.map(e => `
+    <div class="expense-item">
+      <div class="expense-item-left">
+        <div class="e-name">${e.category} ${e.name}</div>
+        <div class="e-meta">${e.date.slice(5)} · 付：${e.paidBy} · 分：${e.splitWith.join('+')} </div>
+      </div>
+      <div class="expense-item-right">
+        <div class="e-amount">${e.currency==='CAD'?'C$':''} ${e.amount.toLocaleString('zh-TW',{maximumFractionDigits:0})}</div>
+        ${e.currency==='CAD'?`<div class="e-split">≈ NT$ ${Math.round(e.amount*rate).toLocaleString()}</div>`:''}
+        <button class="delete-btn" onclick="deleteExpense(${e.id})">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openExpenseModal() {
+  document.getElementById('expenseModal').classList.add('open');
+  document.getElementById('eDate').value = '2025-09-25';
+}
+function closeExpenseModal() {
+  document.getElementById('expenseModal').classList.remove('open');
+}
+
+function saveExpense() {
+  const name = document.getElementById('eName').value.trim();
+  const amount = parseFloat(document.getElementById('eAmount').value);
+  const currency = document.getElementById('eCurrency').value;
+  const category = document.getElementById('eCategory').value;
+  const paidBy = document.getElementById('ePaidBy').value;
+  const date = document.getElementById('eDate').value;
+  const splitWith = [...document.querySelectorAll('#splitGroup input:checked')].map(c=>c.value);
+
+  if(!name || !amount || amount<=0) { alert('請填寫名稱和金額！'); return; }
+  if(splitWith.length===0) { alert('請選擇分攤對象！'); return; }
+
+  const expenses = getExpenses();
+  const newId = Math.max(0, ...expenses.map(e=>e.id)) + 1;
+  expenses.push({ id:newId, date, name, amount, currency, category, paidBy, splitWith });
+  saveExpenses(expenses);
+
+  document.getElementById('eName').value = '';
+  document.getElementById('eAmount').value = '';
+  closeExpenseModal();
+  renderExpenses();
+}
+
+function deleteExpense(id) {
+  if(!confirm('確定刪除這筆支出？')) return;
+  const expenses = getExpenses().filter(e=>e.id!==id);
+  saveExpenses(expenses);
+  renderExpenses();
+}
+
+// Checkbox toggle style
+document.querySelectorAll('.checkbox-label').forEach(label => {
+  const input = label.querySelector('input');
+  label.addEventListener('click', () => {
+    setTimeout(()=>{
+      label.classList.toggle('checked', input.checked);
+    },0);
+  });
+});
+
+// =============================================
+// CURRENCY
+// =============================================
+function convertCurrency() {
+  const rate = parseFloat(document.getElementById('rateInput').value) || 22.5;
+  const from = parseFloat(document.getElementById('fromInput').value) || 0;
+  const result = flipMode ? from / rate : from * rate;
+  document.getElementById('resultAmount').textContent = result.toLocaleString('zh-TW', {maximumFractionDigits:1});
+  renderQuickConvert();
+}
+
+function flipCurrency() {
+  flipMode = !flipMode;
+  document.getElementById('fromLabel').textContent = flipMode ? 'TWD' : 'CAD';
+  document.getElementById('toLabel').textContent = flipMode ? 'CAD' : 'TWD';
+  document.getElementById('direction').textContent = flipMode ? 'TWD → CAD' : 'CAD → TWD';
+  document.getElementById('fromInput').value = '';
+  document.getElementById('resultAmount').textContent = '0';
+}
+
+function renderQuickConvert() {
+  const rate = parseFloat(document.getElementById('rateInput').value) || 22.5;
+  const amounts = [1,5,10,20,50,100,200,500];
+  document.getElementById('quickConvert').innerHTML = amounts.map(n => `
+    <div class="flex-between" style="padding:8px 0;border-bottom:1px solid var(--gray2);font-size:13px;">
+      <span style="font-weight:600;">CAD $ ${n}</span>
+      <span style="color:var(--maple);font-weight:700;">≈ NT$ ${(n*rate).toLocaleString('zh-TW',{maximumFractionDigits:0})}</span>
+    </div>
+  `).join('');
+}
+
+document.getElementById('rateInput').addEventListener('input', function() {
+  cadRate = parseFloat(this.value) || 22.5;
+  convertCurrency();
+  renderExpenses();
+});
+
+// =============================================
+// PACKING LIST
+// =============================================
+function renderPacking() {
+  const saved = JSON.parse(localStorage.getItem('canada_pack') || '{}');
+  const container = document.getElementById('packingContainer');
+  let totalItems = 0, checkedItems = 0;
+
+  container.innerHTML = packingData.map(cat => {
+    const itemsHTML = cat.items.map(item => {
+      const key = cat.cat + '|' + item;
+      const checked = saved[key] || false;
+      totalItems++;
+      if(checked) checkedItems++;
+      return `
+        <div class="pack-item ${checked?'done':''}" onclick="togglePack('${cat.cat.replace(/'/g,"\\'")}','${item.replace(/'/g,"\\'")}',this)">
+          <input type="checkbox" ${checked?'checked':''} onchange="">
+          <span>${item}</span>
+        </div>
+      `;
+    }).join('');
+    return `
+      <div class="pack-category">
+        <h3>${cat.cat}</h3>
+        ${itemsHTML}
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('packProgress').textContent = `${checkedItems} / ${totalItems}`;
+  document.getElementById('packBar').style.width = totalItems > 0 ? `${Math.round(checkedItems/totalItems*100)}%` : '0%';
+}
+
+function togglePack(cat, item, el) {
+  const saved = JSON.parse(localStorage.getItem('canada_pack') || '{}');
+  const key = cat + '|' + item;
+  saved[key] = !saved[key];
+  localStorage.setItem('canada_pack', JSON.stringify(saved));
+  el.classList.toggle('done', saved[key]);
+  el.querySelector('input').checked = saved[key];
+  renderPackingProgress();
+}
+
+function renderPackingProgress() {
+  const saved = JSON.parse(localStorage.getItem('canada_pack') || '{}');
+  let total=0, checked=0;
+  packingData.forEach(c=>c.items.forEach(i=>{total++;if(saved[c.cat+'|'+i])checked++;}));
+  document.getElementById('packProgress').textContent = `${checked} / ${total}`;
+  document.getElementById('packBar').style.width = total>0?`${Math.round(checked/total*100)}%`:'0%';
+}
+
+function resetPacking() {
+  if(!confirm('確定重設所有行李清單？')) return;
+  localStorage.removeItem('canada_pack');
+  renderPacking();
+}
+
+// =============================================
+// NEARBY
+// =============================================
+let currentCity = '溫哥華';
+function renderCityTabs() {
+  const cities = Object.keys(nearbyData);
+  document.getElementById('cityTabs').innerHTML = cities.map(c => `
+    <button class="city-tab ${c===currentCity?'active':''}" onclick="selectCity('${c}')">${c}</button>
+  `).join('');
+}
+
+function selectCity(city) {
+  currentCity = city;
+  document.querySelectorAll('.city-tab').forEach(t => t.classList.toggle('active', t.textContent===city));
+  renderNearby();
+}
+
+function renderNearby() {
+  const items = nearbyData[currentCity] || [];
+  document.getElementById('nearbyContainer').innerHTML = `
+    <div style="font-size:13px;color:#888;margin-bottom:8px;">📍 ${currentCity} 周邊推薦去處</div>
+    ${items.map(n => `
+      <div class="nearby-card">
+        <div class="n-name">${n.emoji} ${n.name}</div>
+        <div class="n-desc">${n.desc}</div>
+        <a class="btn-map" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(n.maps)}" target="_blank">📍 Google Maps</a>
+      </div>
+    `).join('')}
+  `;
+}
+
+// =============================================
+// TAB SWITCHING
+// =============================================
+const tabIds = ['itinerary','flights','hotels','food','expenses','currency','packing','nearby'];
+
+function switchTab(id) {
+  tabIds.forEach(t => {
+    document.getElementById('panel-'+t)?.classList.toggle('active', t===id);
+    document.getElementById('nav-'+t)?.classList.toggle('active', t===id);
+  });
+  document.getElementById('expenseFab').style.display = id==='expenses'?'flex':'none';
+  if(id==='expenses') renderExpenses();
+  if(id==='packing') renderPacking();
+  if(id==='nearby') { renderCityTabs(); renderNearby(); }
+}
+
+// =============================================
+// INIT
+// =============================================
+renderItinerary();
+renderHotels();
+renderFood();
+renderQuickConvert();
+
+// Open today's day by default (or first day)
+window.addEventListener('DOMContentLoaded', () => {
+  toggleDay(1); // 9/25 open by default
+});
+</script>
+</body>
+</html>
