@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -203,8 +203,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 .pack-item-text{font-size:13px;flex:1;transition:color .2s}
 .pack-item.checked .pack-item-text{color:var(--ink3);text-decoration:line-through}
 
-/* ── NEARBY ── */
-.city-pill-row{display:flex;gap:6px;padding:16px 16px 8px;overflow-x:auto}
+
 .city-pill{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;background:var(--white);color:var(--ink2);transition:all .2s}
 .city-pill.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .nearby-card{background:var(--white);border-radius:var(--r);padding:14px;margin:0 16px 8px;border:1px solid var(--border)}
@@ -361,12 +360,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
     <div id="packingContainer"></div>
   </div>
 
-  <!-- ⑧ 周邊 -->
-  <div class="tab-panel" id="panel-nearby">
-    <div class="city-pill-row" id="cityTabs"></div>
-    <div id="nearbyContainer"></div>
-  </div>
-
 </div>
 
 <!-- FAB -->
@@ -439,7 +432,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
   <button class="nav-btn" onclick="switchTab('expenses')" id="nav-expenses"><span class="ico">💰</span>記帳</button>
   <button class="nav-btn" onclick="switchTab('currency')" id="nav-currency"><span class="ico">💱</span>匯率</button>
   <button class="nav-btn" onclick="switchTab('packing')" id="nav-packing"><span class="ico">🧳</span>行李</button>
-  <button class="nav-btn" onclick="switchTab('nearby')" id="nav-nearby"><span class="ico">📍</span>周邊</button>
 </nav>
 
 <script>
@@ -515,7 +507,7 @@ const itineraryData=[
      {name:'明尼萬卡湖 Lake Minnewanka',emoji:'🚢',desc:'班夫地區最大的湖泊，可以搭游船深入湖區！湖面廣闊，四周被層疊山脈包圍，船行其中宛如置身峽灣。游船行程約 90 分鐘，船上講解豐富。',tip:'游船建議提前網路訂位，旺季極易售罄！',cost:'游船約 CAD$50 / 人',transport:'自駕',maps:'Lake Minnewanka Cruise Banff Alberta',photo:photo('mountain-lake-cruise')},
      {name:'約翰斯頓峽谷 Johnston Canyon',emoji:'💦',desc:'沿著峽谷岩壁而建的懸空棧道，一路走到兩個瀑布！水流湍急，峽谷深邃，棧道緊貼岩壁非常刺激。Lower Falls 較近，Upper Falls 更壯觀但需多走約 45 分鐘。秋天岩壁周圍楓葉轉紅，景色絕美。',cost:'免費（停車約 CAD$10）',transport:'自駕',maps:'Johnston Canyon Banff Alberta',photo:photo('canyon-waterfall-trail')},
      {name:'弓河瀑布 Bow Falls',emoji:'🌊',desc:'班夫小鎮步行可達的瀑布！寬約 30 公尺的弓河在此陡降，發出轟鳴水聲，電影《蝴蝶夢》曾在此取景。從小鎮出發步行約 20 分鐘，是午後散步的好選擇。',cost:'免費',transport:'步行（從班夫小鎮）',maps:'Bow Falls Banff Alberta',photo:photo('river-waterfall-mountains')},
-     {name:'硫磺山纜車 Sulphur Mountain',emoji:'🌁',desc:'搭纜車登上 2,281 公尺的硫磺山，班夫小鎮、弓河谷地與遠處雪山盡收眼底！山頂有棧道通往 Sanson's Peak，360 度全景壯觀。秋天時俯瞰楓葉染紅的山谷，讓人屏息。',tip:'纜車建議提前訂票，現場排隊時間可能很長。上山穿厚外套！',cost:'約 CAD$35–45 / 人',transport:'自駕（離小鎮 10 分鐘）',maps:'Banff Gondola Sulphur Mountain',photo:photo('gondola-summit-mountain-view')},
+     {name:'硫磺山纜車 Sulphur Mountain',emoji:'🌁',desc:'搭纜車登上 2,281 公尺的硫磺山，班夫小鎮、弓河谷地與遠處雪山盡收眼底！山頂有棧道通往 Sanson Peak，360 度全景壯觀。秋天時俯瞰楓葉染紅的山谷，讓人屏息。',tip:'纜車建議提前訂票，現場排隊時間可能很長。上山穿厚外套！',cost:'約 CAD$35–45 / 人',transport:'自駕（離小鎮 10 分鐘）',maps:'Banff Gondola Sulphur Mountain',photo:photo('gondola-summit-mountain-view')},
      {name:'班夫上溫泉 Banff Upper Hot Springs',emoji:'♨️',desc:'建議 17:00 抵達！溫泉水溫約 37–40°C，帶著淡淡硫磺香，邊泡邊俯瞰班夫小鎮與山脈，是爬山後最完美的放鬆方式。有更衣室、淋浴間、衣物甩乾機，設備齊全。旁邊有小 trail 可以爬上去看小鎮全景，爬完直接泡溫泉！',tip:'費用 CAD$17.5 / 人（含稅）。帶泳衣、夾腳拖、毛巾！',cost:'CAD$17.5 / 人（含稅）',transport:'自駕（山腰處，有停車場）',maps:'Banff Upper Hot Springs Alberta',photo:photo('hot-springs-mountain-pool')}
    ],
    food:['🫕 The Grizzly House 瑞士火鍋（晚餐，超有特色！）'],
@@ -607,29 +599,7 @@ const foodData={
   ]
 };
 
-const nearbyData={
-  '溫哥華':[
-    {name:'Lynn Canyon Park',emoji:'🌿',desc:'免費的吊橋公園！比卡皮拉諾人少很多，景色同樣壯觀，是在地人的秘密景點。',maps:'Lynn Canyon Park North Vancouver BC'},
-    {name:'Deep Cove 深灣',emoji:'⛵',desc:'劃獨木舟的絕美海灣，配山景，是溫哥華最寧靜的角落。',maps:'Deep Cove North Vancouver BC'},
-    {name:'Lonsdale Quay Market',emoji:'🛥️',desc:'搭渡輪到北溫哥華的市場，體驗在地生活方式。',maps:'Lonsdale Quay Market North Vancouver'},
-    {name:'Mount Seymour',emoji:'🏔️',desc:'距市區最近的山，可開車到山頂，秋天景色壯美。',maps:'Mount Seymour Provincial Park BC'}
-  ],
-  '班夫':[
-    {name:'Sunshine Village',emoji:'⛷️',desc:'班夫最受歡迎的滑雪場，秋天也可乘纜車觀景健行。',maps:'Sunshine Village Banff Alberta'},
-    {name:'Cascade Gardens',emoji:'🌸',desc:'班夫政府大樓旁的英式花園，免費入場，秋天別有風情。',maps:'Cascade Gardens Banff Alberta'},
-    {name:'Banff Avenue 小鎮逛街',emoji:'🏘️',desc:'班夫大道上各種紀念品店、戶外品牌與特色餐廳。',maps:'Banff Avenue Banff Alberta'}
-  ],
-  '賈斯珀':[
-    {name:'Pyramid Lake 金字塔湖',emoji:'🔺',desc:'賈斯珀附近美麗高山湖，可划獨木舟，湖上有小島。',maps:'Pyramid Lake Jasper Alberta'},
-    {name:'Jasper SkyTram',emoji:'🚡',desc:'纜車直達 2,277 公尺，俯瞰賈斯珀國家公園全貌。',maps:'Jasper SkyTram Alberta'},
-    {name:'Medicine Lake 醫藥湖',emoji:'🌊',desc:'地下暗河造成水位劇烈變化的神奇湖泊，地質奇景。',maps:'Medicine Lake Jasper Alberta'}
-  ],
-  '卡加利':[
-    {name:'Heritage Park',emoji:'🏘️',desc:'加拿大最大的活歷史公園，完整重現 19 世紀西部小鎮。',maps:'Heritage Park Calgary Alberta'},
-    {name:"Prince's Island Park",emoji:'🌳',desc:'市中心的弓河島嶼公園，週末散步首選。',maps:"Prince's Island Park Calgary Alberta"},
-    {name:'Calgary Zoo',emoji:'🦁',desc:'世界知名動物園，有各種北美野生動物。',maps:'Calgary Zoo Alberta'}
-  ]
-};
+
 
 const packingData=[
   {cat:'👤 個人證件',items:['護照（有效期 >6個月）','簽證 eTA 電子旅行授權','信用卡 VISA / Master','國際駕照','加幣現金 CAD$200+','美金現金','緊急聯絡卡']},
@@ -962,13 +932,7 @@ function updatePackProgress(d,t){
 function resetPacking(){if(!confirm('確定重設所有打勾？'))return;localStorage.removeItem('canada_pack_v2');renderPacking()}
 
 // ─── NEARBY ──────────────────────────────────────────
-let curCity='溫哥華';
-function renderCityTabs(){
-  document.getElementById('cityTabs').innerHTML=Object.keys(nearbyData).map(c=>`
-    <button class="city-pill${c===curCity?' active':''}" onclick="selectCity('${c}')">${c}</button>
-  `).join('')
-}
-function selectCity(c){curCity=c;renderCityTabs();renderNearby()}
+
 function renderNearby(){
   document.getElementById('nearbyContainer').innerHTML=(nearbyData[curCity]||[]).map(n=>`
     <div class="nearby-card">
@@ -986,7 +950,7 @@ document.querySelectorAll('.cb-lbl').forEach(l=>{
 });
 
 // ─── TABS ────────────────────────────────────────────
-const TABS=['itinerary','flights','hotels','food','expenses','currency','packing','nearby'];
+const TABS=['itinerary','flights','hotels','food','expenses','currency','packing'];
 function switchTab(id){
   TABS.forEach(t=>{
     document.getElementById('panel-'+t)?.classList.toggle('active',t===id);
@@ -995,7 +959,7 @@ function switchTab(id){
   document.getElementById('expenseFab').style.display=id==='expenses'?'flex':'none';
   if(id==='expenses')renderExpenses();
   if(id==='packing')renderPacking();
-  if(id==='nearby'){renderCityTabs();renderNearby()}
+  
 }
 
 // ─── INIT ────────────────────────────────────────────
@@ -1007,3 +971,4 @@ toggleDay(1); // open Day 01 by default
 </script>
 </body>
 </html>
+
