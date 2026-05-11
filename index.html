@@ -967,7 +967,83 @@ renderItinerary();
 renderHotels();
 renderFood();
 renderQuick();
-toggleDay(1); // open Day 01 by default
+toggleDay(1);
+
+// ─── APP ICON ────────────────────────────────────────
+(function(){
+  const c=document.createElement('canvas');
+  c.width=c.height=512;
+  const ctx=c.getContext('2d');
+  const S=512,R=100;
+
+  // Rounded rect clip
+  ctx.beginPath();
+  ctx.moveTo(R,0);ctx.lineTo(S-R,0);ctx.quadraticCurveTo(S,0,S,R);
+  ctx.lineTo(S,S-R);ctx.quadraticCurveTo(S,S,S-R,S);
+  ctx.lineTo(R,S);ctx.quadraticCurveTo(0,S,0,S-R);
+  ctx.lineTo(0,R);ctx.quadraticCurveTo(0,0,R,0);
+  ctx.closePath();ctx.clip();
+
+  // Background: dark charcoal → deep maple → warm gold
+  const bg=ctx.createLinearGradient(0,0,S,S);
+  bg.addColorStop(0,'#1C1410');
+  bg.addColorStop(0.45,'#7A2E12');
+  bg.addColorStop(1,'#C4935A');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,S,S);
+
+  // Subtle warm glow in center
+  const glow=ctx.createRadialGradient(S/2,S/2,60,S/2,S/2,260);
+  glow.addColorStop(0,'rgba(220,130,60,0.35)');
+  glow.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=glow;ctx.fillRect(0,0,S,S);
+
+  // Maple leaf — draw SVG path scaled to canvas
+  ctx.save();
+  ctx.translate(S/2,S/2-24);
+  const scale=3.6;
+  ctx.scale(scale,scale);
+
+  // Classic maple leaf path (centred at 0,0, ~60px tall)
+  ctx.beginPath();
+  ctx.moveTo(0,-60);
+  ctx.lineTo(7,-42);ctx.lineTo(22,-50);ctx.lineTo(16,-34);
+  ctx.lineTo(38,-28);ctx.lineTo(24,-18);ctx.lineTo(56,-4);
+  ctx.lineTo(34,0);ctx.lineTo(40,14);ctx.lineTo(20,8);
+  ctx.lineTo(14,30);ctx.lineTo(0,20);
+  ctx.lineTo(-14,30);ctx.lineTo(-20,8);ctx.lineTo(-40,14);
+  ctx.lineTo(-34,0);ctx.lineTo(-56,-4);ctx.lineTo(-24,-18);
+  ctx.lineTo(-38,-28);ctx.lineTo(-16,-34);ctx.lineTo(-22,-50);
+  ctx.lineTo(-7,-42);ctx.closePath();
+
+  // Leaf fill with gradient
+  const lf=ctx.createLinearGradient(0,-60,0,30);
+  lf.addColorStop(0,'rgba(255,255,255,0.95)');
+  lf.addColorStop(1,'rgba(255,220,160,0.85)');
+  ctx.fillStyle=lf;
+  ctx.fill();
+
+  // Stem
+  ctx.beginPath();ctx.moveTo(0,30);ctx.lineTo(0,50);
+  ctx.strokeStyle='rgba(255,255,255,0.8)';
+  ctx.lineWidth=4;ctx.lineCap='round';ctx.stroke();
+  ctx.restore();
+
+  // "CANADA 2026" label at bottom
+  ctx.fillStyle='rgba(255,255,255,0.45)';
+  ctx.font='600 36px -apple-system,sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.letterSpacing='4px';
+  ctx.fillText('CANADA 2026',S/2,S-66);
+
+  const url=c.toDataURL('image/png');
+
+  // Apply as apple-touch-icon + favicon
+  ['apple-touch-icon','icon'].forEach(rel=>{
+    let el=document.querySelector(`link[rel="${rel}"]`);
+    if(!el){el=document.createElement('link');el.rel=rel;if(rel==='icon')el.type='image/png';document.head.appendChild(el);}
+    el.href=url;
+  });
+})();
 </script>
 </body>
 </html>
