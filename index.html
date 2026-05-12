@@ -114,7 +114,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 .btn-outline{display:flex;align-items:center;justify-content:center;padding:12px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;color:var(--ink2);cursor:pointer;background:none;width:100%;margin-bottom:20px}
 
 /* ── EXPENSE MODAL ── */
-.exp-modal{background:var(--white);border-radius:var(--r2) var(--r2) 0 0;width:100%;max-width:480px;padding:24px 20px 40px;animation:slideUp .3s ease}
+.exp-modal{background:var(--white);border-radius:var(--r2) var(--r2) 0 0;width:100%;max-width:480px;padding:24px 20px 40px;animation:slideUp .3s ease;max-height:92vh;overflow-y:auto}
 .exp-modal h3{font-size:18px;font-weight:800;margin-bottom:18px}
 .form-row{margin-bottom:14px}
 .form-row label{font-size:10px;color:var(--ink3);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:5px;display:block}
@@ -411,6 +411,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
       <div class="exp-total-label">旅行總花費</div>
       <div class="exp-total" id="totalAmount">—</div>
       <div class="exp-per" id="perPersonAmount"></div>
+      <button onclick="openExpenseModal()" style="margin-top:14px;width:100%;padding:13px;background:var(--gold);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.5px;font-family:inherit">＋ 新增花費</button>
     </div>
     <div class="panel-inner" style="padding-top:0">
       <div class="sec-label">個人統計</div>
@@ -489,13 +490,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 <div class="modal-overlay" id="expenseModal" onclick="handleExpModalClick(event)">
   <div class="exp-modal">
     <h3 id="expModalTitle">新增支出</h3>
-    <div class="form-row"><label>日期</label><input type="date" id="eDate" min="2026-09-24" max="2026-10-04"></div>
+    <div class="form-row"><label>日期</label><input type="date" id="eDate" min="2026-09-24" max="2026-10-06"></div>
     <div class="form-row"><label>項目名稱</label><input type="text" id="eName" placeholder="例：午餐、門票…"></div>
-    <div class="form-row"><label>金額與幣別</label>
-      <div style="display:flex;gap:8px">
-        <input type="number" id="eAmount" placeholder="0" style="flex:1">
-        <select id="eCurrency" style="width:88px"><option>TWD</option><option>CAD</option></select>
+    <div class="form-row"><label>幣別</label>
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button type="button" id="btnTWD" onclick="setCurrency('TWD')" style="flex:1;padding:10px;border-radius:var(--r);border:2px solid var(--ink);background:var(--ink);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">🇹🇼 台幣 TWD</button>
+        <button type="button" id="btnCAD" onclick="setCurrency('CAD')" style="flex:1;padding:10px;border-radius:var(--r);border:2px solid var(--border);background:none;color:var(--ink2);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">🇨🇦 加幣 CAD</button>
       </div>
+      <input type="hidden" id="eCurrency" value="TWD">
+      <label style="font-size:10px;color:var(--ink3);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:5px;display:block">金額</label>
+      <input type="number" id="eAmount" placeholder="輸入金額" step="0.01" style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:18px;font-weight:700;font-family:inherit;outline:none;color:var(--ink)" oninput="this.style.borderColor='var(--gold)';updateCadHint()">
+      <div id="eCadHint" style="display:none;font-size:11px;color:var(--ink3);margin-top:5px">≈ NT$ <span id="cadConvertHint">—</span>（匯率 <span id="hintRate">22.5</span>）</div>
     </div>
     <div class="form-row"><label>類別</label>
       <select id="eCategory">
@@ -1054,6 +1059,28 @@ function renderExpenses(){
     </div>`}).join('')
 }
 
+function setCurrency(cur){
+  document.getElementById('eCurrency').value=cur;
+  const isTWD=cur==='TWD';
+  const btnTWD=document.getElementById('btnTWD');
+  const btnCAD=document.getElementById('btnCAD');
+  btnTWD.style.background=isTWD?'var(--ink)':'none';
+  btnTWD.style.color=isTWD?'#fff':'var(--ink2)';
+  btnTWD.style.borderColor=isTWD?'var(--ink)':'var(--border)';
+  btnCAD.style.background=!isTWD?'var(--rose)':'none';
+  btnCAD.style.color=!isTWD?'#fff':'var(--ink2)';
+  btnCAD.style.borderColor=!isTWD?'var(--rose)':'var(--border)';
+  document.getElementById('eCadHint').style.display=isTWD?'none':'block';
+  updateCadHint();
+}
+function updateCadHint(){
+  if(document.getElementById('eCurrency').value!=='CAD')return;
+  const rate=parseFloat(document.getElementById('rateInput')?.value||22.5);
+  const amt=parseFloat(document.getElementById('eAmount').value)||0;
+  document.getElementById('cadConvertHint').textContent=amt?(Math.round(amt*rate).toLocaleString()):'—';
+  document.getElementById('hintRate').textContent=rate.toFixed(1);
+}
+
 let editingId=null;
 function openExpenseModal(){
   editingId=null;
@@ -1062,9 +1089,9 @@ function openExpenseModal(){
   document.getElementById('eDate').value='2026-09-25';
   document.getElementById('eName').value='';
   document.getElementById('eAmount').value='';
-  document.getElementById('eCurrency').value='TWD';
-  document.getElementById('eCategory').value='🍽️ 餐飲';
+  document.getElementById('eCategory').selectedIndex=0;
   document.getElementById('ePaidBy').value='媽媽';
+  setCurrency('TWD');
   document.querySelectorAll('#splitGroup input').forEach(inp=>{
     const def=['平平','陳威榤','媽媽','二舅舅'].includes(inp.value);
     inp.checked=def;
@@ -1082,7 +1109,7 @@ function openEditExpenseModal(id){
   document.getElementById('eDate').value=e.date;
   document.getElementById('eName').value=e.name;
   document.getElementById('eAmount').value=e.amount;
-  document.getElementById('eCurrency').value=e.currency;
+  setCurrency(e.currency);
   document.getElementById('eCategory').value=e.category;
   document.getElementById('ePaidBy').value=e.paidBy;
   document.querySelectorAll('#splitGroup input').forEach(inp=>{
