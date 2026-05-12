@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -145,7 +145,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 .ei-meta{font-size:10px;color:var(--ink3);margin-top:2px}
 .ei-amt{font-size:15px;font-weight:700;color:var(--rose);text-align:right}
 .ei-split{font-size:10px;color:var(--ink3);text-align:right}
-.ei-del{background:none;border:none;color:var(--border);font-size:16px;cursor:pointer;padding:4px;margin-left:8px}
+.ei-del{background:none;border:none;color:var(--border);font-size:16px;cursor:pointer;padding:4px;margin-left:4px}
+.ei-edit{background:none;border:none;color:var(--gold);font-size:15px;cursor:pointer;padding:4px;margin-left:4px}
+.cb-all-btn{font-size:11px;padding:5px 12px;border:1.5px solid var(--gold);border-radius:20px;background:none;color:var(--gold);cursor:pointer;font-weight:700;font-family:inherit}
 .split-tbl{width:100%;border-collapse:collapse;font-size:12px}
 .split-tbl th{padding:8px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);font-weight:700;border-bottom:1px solid var(--border);text-align:center}
 .split-tbl td{padding:9px 8px;text-align:center;border-bottom:1px solid var(--border2)}
@@ -216,11 +218,35 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 .spacer{height:12px}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
+/* ── EDIT MODE ── */
+.edit-mode-bar{padding:10px 16px;background:var(--gold-bg);border-bottom:1px solid var(--gold-light);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.edit-toggle-btn{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:700;border:1.5px solid var(--ink);background:none;color:var(--ink);cursor:pointer;font-family:inherit;flex-shrink:0;transition:all .2s}
+.edit-toggle-btn.on{background:var(--ink);color:#fff}
+.route-btn{padding:5px 11px;border-radius:20px;background:none;border:1.5px solid var(--gold);font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0}
+.spot-edit-bar{display:none;justify-content:space-between;align-items:center;padding:8px 12px;border-top:1px solid var(--border2);gap:6px}
+.spot-edit-bar.show{display:flex}
+.spot-move-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:3px 10px;font-size:14px;cursor:pointer;color:var(--ink2);line-height:1.4;font-family:inherit}
+.spot-move-btn:disabled{opacity:.3;cursor:default}
+.spot-pencil-btn{background:none;border:1.5px solid var(--gold);border-radius:8px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;color:var(--gold);font-family:inherit}
+/* ── SPOT EDIT MODAL ── */
+.se-modal{background:var(--white);border-radius:var(--r2) var(--r2) 0 0;width:100%;max-width:480px;padding:24px 20px 40px;animation:slideUp .3s ease;max-height:88vh;overflow-y:auto}
+.se-modal h3{font-size:17px;font-weight:800;margin-bottom:3px}
+.se-modal-sub{font-size:11px;color:var(--ink3);margin-bottom:18px;letter-spacing:.5px}
+.se-textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;font-family:inherit;outline:none;resize:vertical;min-height:72px;color:var(--ink);background:var(--white);transition:border-color .2s}
+.se-textarea:focus{border-color:var(--gold)}
+/* ── RENTAL CARD ── */
+.rental-card{background:var(--white);border-radius:var(--r);padding:16px;margin-bottom:10px;border:1px solid var(--border)}
+.rental-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--border2);font-size:12px;gap:8px}
+.rental-row:last-child{border:none;padding-bottom:0}
+.rlbl{color:var(--ink3);font-size:11px;flex-shrink:0}
+.rval{font-weight:600;text-align:right}
+
 @media(prefers-color-scheme:dark){
   :root{--ivory:#141210;--white:#1E1C1A;--border:#2E2A26;--border2:#262220;--ink3:#6A6258}
   body{background:var(--ivory);color:#F0EBE4}
-  .bottom-nav,.exp-modal,.spot-modal{background:#1E1C1A}
-  .pack-item,.food-card,.hotel-card,.flight-card,.person-card,.exp-item,.nearby-card,.currency-wrap{background:#1E1C1A}
+  .bottom-nav,.exp-modal,.spot-modal,.se-modal{background:#1E1C1A}
+  .pack-item,.food-card,.hotel-card,.flight-card,.person-card,.exp-item,.nearby-card,.currency-wrap,.rental-card{background:#1E1C1A}
+  .se-textarea{background:#1E1C1A;color:#F0EBE4}
 }
 </style>
 </head>
@@ -243,6 +269,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
       <div class="ov-item"><div class="num">5</div><div class="lbl">城市</div></div>
       <div class="ov-item"><div class="num">4+1</div><div class="lbl">人</div></div>
       <div class="ov-item"><div class="num">30+</div><div class="lbl">景點</div></div>
+    </div>
+    <div class="edit-mode-bar">
+      <span style="font-size:11px;color:var(--ink2)">點景點可查詳情 · 編輯可調整順序與資訊</span>
+      <button class="edit-toggle-btn" id="editModeBtn" onclick="toggleEditMode()">✏️ 編輯行程</button>
     </div>
     <div id="itineraryContainer"></div>
   </div>
@@ -286,6 +316,74 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
         </div>
         <div class="flt-time-row"><span>9/28（一）08:30 起飛</span><span>9/28（一）11:00 抵達</span></div>
         <div style="background:var(--rose-light);border-radius:8px;padding:10px;margin-top:10px;font-size:11px;color:#C62828">⚠️ 司機 5:30 來接，CAD $120，只收現金（微信 Long）</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="sec-label">回程 · 短程接駁</div>
+      <div class="flight-card">
+        <div class="flight-airline">ALASKA AIRLINES 阿拉斯加航空</div>
+        <div class="flex-between">
+          <div class="flight-num" style="color:var(--rose)">AS 2308</div>
+          <div style="font-size:11px;color:var(--ink3)">艙等 N · E75</div>
+        </div>
+        <div class="flight-route">
+          <div><div class="apt-code">YYC</div><div class="apt-city">卡加利</div></div>
+          <div class="flt-line">
+            <div style="font-size:10px;color:var(--ink3);margin-bottom:3px">✈ 49min</div>
+            <div class="flt-line-bar"></div>
+          </div>
+          <div><div class="apt-code">SEA</div><div class="apt-city">西雅圖</div></div>
+        </div>
+        <div class="flt-time-row"><span>10/4（日）19:00 起飛</span><span>10/4（日）19:49 抵達</span></div>
+        <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:10px;font-size:11px;color:var(--ink2)">💡 聯營航班 · 長榮回程銜接班機</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="sec-label">回程 · 長途</div>
+      <div class="flight-card">
+        <div class="flight-airline">EVA AIR 長榮航空</div>
+        <div class="flex-between">
+          <div class="flight-num">BR 25</div>
+          <div style="font-size:11px;color:var(--ink3)">經濟艙 V · 波音787-10</div>
+        </div>
+        <div class="flight-route">
+          <div><div class="apt-code">SEA</div><div class="apt-city">西雅圖</div></div>
+          <div class="flt-line">
+            <div style="font-size:10px;color:var(--ink3);margin-bottom:3px">✈ 12h50m</div>
+            <div class="flt-line-bar"></div>
+          </div>
+          <div><div class="apt-code">TPE</div><div class="apt-city">桃園 T2</div></div>
+        </div>
+        <div class="flt-time-row"><span>10/5（一）01:30 起飛</span><span>10/6（二）05:20 抵達</span></div>
+        <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:10px;font-size:11px;color:var(--ink2)">✅ 免費託運 2件×23kg · 有提供餐點<br>📞 長榮西雅圖：(1)-800-695-1188 / +1-206-242-8888</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="sec-label">租車資訊</div>
+      <div class="rental-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+          <div>
+            <div style="font-size:15px;font-weight:800">🚗 Budget 租車</div>
+            <div style="font-size:11px;color:var(--ink3);margin-top:3px">卡加利國際機場 · 步行可達</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:15px;font-weight:700;color:var(--rose)">NT$ 19,019</div>
+            <div style="font-size:10px;color:var(--ink3)">已預付</div>
+          </div>
+        </div>
+        <div class="rental-row"><span class="rlbl">取車</span><span class="rval">9/28（一）12:00</span></div>
+        <div class="rental-row"><span class="rlbl">還車</span><span class="rval">10/2（五）19:30</span></div>
+        <div class="rental-row"><span class="rlbl">天數</span><span class="rval">4 天</span></div>
+        <div class="rental-row"><span class="rlbl">車型</span><span class="rval">克萊斯勒 Pacifica 迷你廂型車（7人座，自排）</span></div>
+        <div class="rental-row"><span class="rlbl">確認號碼</span><span class="rval" style="font-family:monospace;font-size:11px">1359041916351703</span></div>
+        <div class="rental-row"><span class="rlbl">PIN 碼</span><span class="rval" style="font-family:monospace;font-size:18px;font-weight:900;color:var(--rose)">8967</span></div>
+        <div class="rental-row"><span class="rlbl">主駕駛</span><span class="rval">CHEN/WEIJIE</span></div>
+        <div class="rental-row"><span class="rlbl">聯繫</span><span class="rval">+1-800-268-8900</span></div>
+        <div style="background:var(--rose-light);border-radius:8px;padding:10px;margin-top:10px;font-size:11px;color:#C62828;line-height:1.8">
+          ⚠️ 取車必備：有效護照＋台灣駕照＋國際駕照<br>
+          ＋晶片信用卡（押金 CAD$750≈NT$17,353）＋來回機票佐證
+        </div>
+        <div style="background:var(--gold-bg);border-radius:8px;padding:10px;margin-top:6px;font-size:11px;color:var(--ink2);line-height:1.8">
+          ✅ 已含：車損險（自負額CA$500）· 第三方責任險 · 個人意外險 · 兒童汽座×1
+        </div>
+        <a class="btn-map-sm" style="margin-top:10px;display:inline-flex" href="https://www.google.com/maps/search/?api=1&query=Budget+Car+Rental+2000+Airport+Road+NE+Calgary" target="_blank">📍 取還車地點</a>
       </div>
     </div>
   </div>
@@ -390,7 +488,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
 <!-- EXPENSE MODAL -->
 <div class="modal-overlay" id="expenseModal" onclick="handleExpModalClick(event)">
   <div class="exp-modal">
-    <h3>新增支出</h3>
+    <h3 id="expModalTitle">新增支出</h3>
     <div class="form-row"><label>日期</label><input type="date" id="eDate" min="2026-09-24" max="2026-10-04"></div>
     <div class="form-row"><label>項目名稱</label><input type="text" id="eName" placeholder="例：午餐、門票…"></div>
     <div class="form-row"><label>金額與幣別</label>
@@ -409,7 +507,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
     <div class="form-row"><label>誰付錢</label>
       <select id="ePaidBy"><option>媽媽</option><option>平平</option><option>陳威榤</option><option>二舅舅</option></select>
     </div>
-    <div class="form-row"><label>分攤給誰</label>
+    <div class="form-row"><label style="display:flex;justify-content:space-between;align-items:center">分攤給誰 <button type="button" class="cb-all-btn" onclick="toggleAllSplit()">全選/清除</button></label>
       <div class="cb-group" id="splitGroup">
         <label class="cb-lbl checked"><input type="checkbox" value="平平" checked>平平</label>
         <label class="cb-lbl checked"><input type="checkbox" value="陳威榤" checked>陳威榤</label>
@@ -418,8 +516,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang TC','Noto Sans TC',s
         <label class="cb-lbl"><input type="checkbox" value="小寶貝">小寶貝</label>
       </div>
     </div>
-    <button class="btn-primary" onclick="saveExpense()">確認新增</button>
+    <button class="btn-primary" id="expModalSaveBtn" onclick="saveExpense()">確認新增</button>
     <button class="btn-secondary" onclick="closeExpenseModal()">取消</button>
+  </div>
+</div>
+
+<!-- SPOT EDIT MODAL -->
+<div class="modal-overlay" id="spotEditModal" onclick="handleSeModalClick(event)">
+  <div class="se-modal">
+    <h3 id="seModalTitle"></h3>
+    <div class="se-modal-sub" id="seModalSub"></div>
+    <div class="form-row"><label>費用（修改後儲存即生效）</label><input type="text" id="seCost" placeholder="例：免費 / CAD$12–16 / 人 / 機票已含"></div>
+    <div class="form-row"><label>小提示 / 注意事項</label><input type="text" id="seTip" placeholder="如：需提前預約、建議早去…"></div>
+    <div class="form-row"><label>景點說明</label><textarea class="se-textarea" id="seDesc"></textarea></div>
+    <button class="btn-primary" onclick="saveSpotEdit()">儲存變更</button>
+    <button class="btn-secondary" onclick="resetSpotEdit()">恢復原始資料</button>
+    <button class="btn-secondary" onclick="closeSpotEditModal()">取消</button>
   </div>
 </div>
 
@@ -639,22 +751,131 @@ function getExpenses(){
 }
 function saveExpenses(arr){localStorage.setItem(EXPENSE_KEY,JSON.stringify(arr))}
 
+// ─── ITINERARY EDIT & ORDER ──────────────────────────
+const SPOT_EDITS_KEY='canada_spot_edits_v1';
+const SPOT_ORDER_KEY='canada_spot_order_v1';
+let editMode=false;
+let seEditDayIdx=null,seEditOrigSi=null;
+
+function getSpotEdits(){try{return JSON.parse(localStorage.getItem(SPOT_EDITS_KEY)||'{}')}catch(e){return{}}}
+function setSpotEdits(e){localStorage.setItem(SPOT_EDITS_KEY,JSON.stringify(e))}
+function getSpotOrder(dayIdx,len){
+  try{
+    const o=JSON.parse(localStorage.getItem(SPOT_ORDER_KEY)||'{}');
+    if(o[dayIdx]&&o[dayIdx].length===len)return o[dayIdx];
+  }catch(e){}
+  return Array.from({length:len},(_,i)=>i);
+}
+function setSpotOrder(dayIdx,order){
+  try{
+    const o=JSON.parse(localStorage.getItem(SPOT_ORDER_KEY)||'{}');
+    o[dayIdx]=order;
+    localStorage.setItem(SPOT_ORDER_KEY,JSON.stringify(o));
+  }catch(e){}
+}
+function toggleEditMode(){
+  editMode=!editMode;
+  const btn=document.getElementById('editModeBtn');
+  btn.textContent=editMode?'✅ 完成編輯':'✏️ 編輯行程';
+  btn.classList.toggle('on',editMode);
+  renderItinerary();
+}
+function moveSpot(dayIdx,displayPos,dir){
+  const day=itineraryData[dayIdx];
+  const order=getSpotOrder(dayIdx,day.spots.length);
+  const newPos=displayPos+dir;
+  if(newPos<0||newPos>=order.length)return;
+  [order[displayPos],order[newPos]]=[order[newPos],order[displayPos]];
+  setSpotOrder(dayIdx,order);
+  renderItinerary();
+  const body=document.getElementById('dayBody'+dayIdx);
+  const arrow=document.getElementById('dayArrow'+dayIdx);
+  if(body){body.classList.add('open');arrow.classList.add('open');arrow.style.transform='rotate(90deg)'}
+}
+function openDayRoute(dayIdx){
+  const day=itineraryData[dayIdx];
+  if(!day.spots||!day.spots.length)return;
+  const order=getSpotOrder(dayIdx,day.spots.length);
+  const places=order.map(si=>day.spots[si].maps).filter(Boolean);
+  if(!places.length)return;
+  if(places.length===1){window.open('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(places[0]),'_blank');return}
+  window.open('https://www.google.com/maps/dir/'+places.map(p=>encodeURIComponent(p)).join('/'),'_blank');
+}
+function openSpotEditModal(dayIdx,origSi){
+  seEditDayIdx=dayIdx;seEditOrigSi=origSi;
+  const day=itineraryData[dayIdx];
+  const base=day.spots[origSi];
+  const edits=getSpotEdits();
+  const s=edits[dayIdx+'-'+origSi]?{...base,...edits[dayIdx+'-'+origSi]}:base;
+  document.getElementById('seModalTitle').textContent=s.emoji+' '+s.name;
+  document.getElementById('seModalSub').textContent=day.date+' · '+day.city;
+  document.getElementById('seCost').value=s.cost||'';
+  document.getElementById('seTip').value=s.tip||'';
+  document.getElementById('seDesc').value=s.desc||'';
+  document.getElementById('spotEditModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSpotEditModal(){
+  document.getElementById('spotEditModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleSeModalClick(e){if(e.target===e.currentTarget)closeSpotEditModal()}
+function saveSpotEdit(){
+  const edits=getSpotEdits();
+  edits[seEditDayIdx+'-'+seEditOrigSi]={
+    cost:document.getElementById('seCost').value.trim(),
+    tip:document.getElementById('seTip').value.trim(),
+    desc:document.getElementById('seDesc').value.trim()
+  };
+  setSpotEdits(edits);
+  closeSpotEditModal();
+  renderItinerary();
+  const body=document.getElementById('dayBody'+seEditDayIdx);
+  const arrow=document.getElementById('dayArrow'+seEditDayIdx);
+  if(body){body.classList.add('open');arrow.classList.add('open');arrow.style.transform='rotate(90deg)'}
+}
+function resetSpotEdit(){
+  const edits=getSpotEdits();
+  delete edits[seEditDayIdx+'-'+seEditOrigSi];
+  setSpotEdits(edits);
+  closeSpotEditModal();
+  renderItinerary();
+  const body=document.getElementById('dayBody'+seEditDayIdx);
+  const arrow=document.getElementById('dayArrow'+seEditDayIdx);
+  if(body){body.classList.add('open');arrow.classList.add('open');arrow.style.transform='rotate(90deg)'}
+}
+
 // ─── RENDER ITINERARY ────────────────────────────────
 function renderItinerary(){
   const c=document.getElementById('itineraryContainer');
+  const allEdits=getSpotEdits();
   c.innerHTML=itineraryData.map((day,i)=>{
-    const spotsHTML=(day.spots||[]).map((s,si)=>`
-      <div class="spot-card" onclick="openSpotModal(${i},${si})">
+    const spots=day.spots||[];
+    const order=getSpotOrder(i,spots.length);
+
+    const spotsHTML=order.map((origSi,displaySi)=>{
+      const base=spots[origSi];
+      const key=i+'-'+origSi;
+      const s=allEdits[key]?{...base,...allEdits[key]}:base;
+      const editBar=editMode?`
+        <div class="spot-edit-bar show">
+          <div style="display:flex;gap:6px">
+            <button class="spot-move-btn" onclick="event.stopPropagation();moveSpot(${i},${displaySi},-1)"${displaySi===0?' disabled':''}>↑</button>
+            <button class="spot-move-btn" onclick="event.stopPropagation();moveSpot(${i},${displaySi},1)"${displaySi===order.length-1?' disabled':''}>↓</button>
+          </div>
+          <button class="spot-pencil-btn" onclick="event.stopPropagation();openSpotEditModal(${i},${origSi})">✏️ 編輯</button>
+        </div>`:'';
+      const cardClick=editMode?'':` onclick="openSpotModal(${i},${origSi})"`;
+      return`<div class="spot-card"${cardClick}>
         <div class="spot-photo-wrap">
-          <img src="${s.photo||''}" alt="${s.name}" loading="lazy"
-            onerror="this.style.display='none'">
+          <img src="${s.photo||''}" alt="${s.name}" loading="lazy" onerror="this.style.display='none'">
           <div class="spot-photo-gradient"></div>
           <div class="spot-photo-info">
             <div class="spot-photo-name">${s.emoji} ${s.name}</div>
             <div class="spot-photo-tags">
-              ${s.cost&&s.cost.includes('免費')?`<span class="spot-tag spot-tag-free">免費</span>`:''}
+              ${s.cost&&s.cost.includes('免費')?'<span class="spot-tag spot-tag-free">免費</span>':''}
               ${s.cost&&!s.cost.includes('免費')&&!s.cost.includes('已訂')?`<span class="spot-tag spot-tag-cost">${s.cost.split('，')[0]}</span>`:''}
-              <span class="spot-tag spot-tag-map">📖 詳細</span>
+              ${editMode?'<span class="spot-tag" style="background:rgba(196,162,107,.25);color:var(--gold)">✏️ 可編輯</span>':'<span class="spot-tag spot-tag-map">📖 詳細</span>'}
             </div>
           </div>
         </div>
@@ -662,8 +883,9 @@ function renderItinerary(){
           <span class="spot-card-arrow-text">${s.transport||'步行'}</span>
           <span class="spot-card-arrow-icon">›</span>
         </div>
-      </div>
-    `).join('');
+        ${editBar}
+      </div>`;
+    }).join('');
 
     const foodHTML=day.food?`
       <div class="day-food">
@@ -701,6 +923,7 @@ function renderItinerary(){
             <div class="day-title">${day.emoji} ${day.title}</div>
             <div class="day-city">${day.city}</div>
           </div>
+          ${spots.length>1?`<button class="route-btn" onclick="event.stopPropagation();openDayRoute(${i})">🗺 路線</button>`:''}
           <div class="day-arrow" id="dayArrow${i}">›</div>
         </div>
         <div class="day-line"></div>
@@ -724,7 +947,9 @@ function toggleDay(i){
 // ─── SPOT MODAL ──────────────────────────────────────
 function openSpotModal(di,si){
   const day=itineraryData[di];
-  const s=day.spots[si];
+  const base=day.spots[si];
+  const edits=getSpotEdits();
+  const s=edits[di+'-'+si]?{...base,...edits[di+'-'+si]}:base;
   document.getElementById('spotModalImg').src=s.photo||'';
   document.getElementById('spotModalEmoji').textContent=s.emoji;
   document.getElementById('spotModalName').textContent=s.name;
@@ -811,31 +1036,77 @@ function renderExpenses(){
       <td>NT$ ${Math.round(paid[p]).toLocaleString()}</td>
       <td class="${b>=0?'bal-pos':'bal-neg'}">${b>=0?'+':''}NT$ ${Math.round(b).toLocaleString()}</td>
     </tr>`}).join('')}`;
-  document.getElementById('expenseList').innerHTML=[...expenses].sort((a,b)=>b.id-a.id).map(e=>`
-    <div class="exp-item">
-      <div>
+  document.getElementById('expenseList').innerHTML=[...expenses].sort((a,b)=>b.id-a.id).map(e=>{
+    const splitLabel=PEOPLE.every(p=>e.splitWith.includes(p))?'全部4人':e.splitWith.join('、');
+    return`<div class="exp-item">
+      <div style="flex:1;min-width:0">
         <div class="ei-name">${e.category} ${e.name}</div>
-        <div class="ei-meta">${e.date.slice(5)} · 付：${e.paidBy} · 分：${e.splitWith.join('、')}</div>
+        <div class="ei-meta">${e.date.slice(5)} · 付：${e.paidBy} · 分：${splitLabel}</div>
       </div>
-      <div style="display:flex;align-items:center">
-        <div>
+      <div style="display:flex;align-items:center;flex-shrink:0">
+        <div style="text-align:right">
           <div class="ei-amt">${e.currency==='CAD'?'C$':'NT$'} ${e.amount.toLocaleString('zh-TW',{maximumFractionDigits:0})}</div>
           ${e.currency==='CAD'?`<div class="ei-split">≈ NT$ ${Math.round(e.amount*rate).toLocaleString()}</div>`:''}
         </div>
+        <button class="ei-edit" onclick="openEditExpenseModal(${e.id})">✏️</button>
         <button class="ei-del" onclick="delExpense(${e.id})">🗑</button>
       </div>
-    </div>
-  `).join('')
+    </div>`}).join('')
 }
 
+let editingId=null;
 function openExpenseModal(){
-  document.getElementById('expenseModal').classList.add('open');
+  editingId=null;
+  document.getElementById('expModalTitle').textContent='新增支出';
+  document.getElementById('expModalSaveBtn').textContent='確認新增';
   document.getElementById('eDate').value='2026-09-25';
+  document.getElementById('eName').value='';
+  document.getElementById('eAmount').value='';
+  document.getElementById('eCurrency').value='TWD';
+  document.getElementById('eCategory').value='🍽️ 餐飲';
+  document.getElementById('ePaidBy').value='媽媽';
+  document.querySelectorAll('#splitGroup input').forEach(inp=>{
+    const def=['平平','陳威榤','媽媽','二舅舅'].includes(inp.value);
+    inp.checked=def;
+    inp.parentElement.classList.toggle('checked',def);
+  });
+  document.getElementById('expenseModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function openEditExpenseModal(id){
+  const e=getExpenses().find(x=>x.id===id);
+  if(!e)return;
+  editingId=id;
+  document.getElementById('expModalTitle').textContent='編輯支出';
+  document.getElementById('expModalSaveBtn').textContent='確認修改';
+  document.getElementById('eDate').value=e.date;
+  document.getElementById('eName').value=e.name;
+  document.getElementById('eAmount').value=e.amount;
+  document.getElementById('eCurrency').value=e.currency;
+  document.getElementById('eCategory').value=e.category;
+  document.getElementById('ePaidBy').value=e.paidBy;
+  document.querySelectorAll('#splitGroup input').forEach(inp=>{
+    const checked=e.splitWith.includes(inp.value);
+    inp.checked=checked;
+    inp.parentElement.classList.toggle('checked',checked);
+  });
+  document.getElementById('expenseModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
 function closeExpenseModal(){
+  editingId=null;
   document.getElementById('expenseModal').classList.remove('open');
   document.body.style.overflow='';
+}
+function toggleAllSplit(){
+  const inputs=[...document.querySelectorAll('#splitGroup input')];
+  const allChecked=inputs.filter(i=>['平平','陳威榤','媽媽','二舅舅'].includes(i.value)).every(i=>i.checked);
+  inputs.forEach(i=>{
+    if(['平平','陳威榤','媽媽','二舅舅'].includes(i.value)){
+      i.checked=!allChecked;
+      i.parentElement.classList.toggle('checked',!allChecked);
+    }
+  });
 }
 function handleExpModalClick(e){if(e.target===e.currentTarget)closeExpenseModal()}
 
@@ -845,19 +1116,21 @@ function saveExpense(){
   if(!name||!amount||amount<=0){alert('請填寫名稱和金額！');return}
   const splitWith=[...document.querySelectorAll('#splitGroup input:checked')].map(c=>c.value);
   if(!splitWith.length){alert('請選擇分攤對象！');return}
-  const arr=getExpenses();
-  arr.push({
-    id:Math.max(0,...arr.map(e=>e.id))+1,
+  const entry={
     date:document.getElementById('eDate').value,
     name,amount,
     currency:document.getElementById('eCurrency').value,
     category:document.getElementById('eCategory').value,
     paidBy:document.getElementById('ePaidBy').value,
     splitWith
-  });
+  };
+  let arr=getExpenses();
+  if(editingId!==null){
+    arr=arr.map(e=>e.id===editingId?{...e,...entry}:e);
+  }else{
+    arr.push({id:Math.max(0,...arr.map(e=>e.id))+1,...entry});
+  }
   saveExpenses(arr);
-  document.getElementById('eName').value='';
-  document.getElementById('eAmount').value='';
   closeExpenseModal();
   renderExpenses();
 }
